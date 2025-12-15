@@ -64,7 +64,8 @@ public class AsuntoPropioController {
 	@PostMapping("/solicitar")
 	public ResponseEntity<AsuntoPropio> crearAsuntoPropio(@Valid @RequestBody AsuntoPropio asuntoPropio) {
 		AsuntoPropio nuevo = asuntoPropioService.solicitarDia(asuntoPropio);
-		return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(nuevo);
 	}
 
 	@PutMapping("/validar/{fecha}/{docente_id}/{estado}")
@@ -75,6 +76,7 @@ public class AsuntoPropioController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> borrarAsuntoPropio(@PathVariable Long id) {
 		asuntoPropioService.deleteById(id);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.noContent()
+				.build();
 	}
 }

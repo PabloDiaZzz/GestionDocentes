@@ -46,15 +46,17 @@ public class GuardiaController {
 
 	@PostMapping
 	public ResponseEntity<Guardia> createGuardia(@Valid @RequestBody Guardia guardia) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(guardiaService.save(guardia));
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(guardiaService.save(guardia));
 	}
 
 	@PostMapping("/generar")
 	public ResponseEntity<Guardia> generarGuardiaParaHora(@Valid @RequestBody FaltaDTO falta) {
 		Guardia guardia = guardiaService.generarGuardiaParaHora(falta);
-		return ResponseEntity.status(HttpStatus.CREATED).body(guardiaService.save(guardia));
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(guardiaService.save(guardia));
 	}
-	
+
 	@PostMapping("/validacion-automatica/{fecha}")
 	public ResponseEntity<List<Guardia>> validacionAutomatica(@PathVariable LocalDate fecha) {
 		List<Guardia> guardiasValidadas = guardiaService.validacionAutomatica(fecha);
@@ -71,6 +73,7 @@ public class GuardiaController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteGuardia(@PathVariable Long id) {
 		guardiaService.deleteById(id);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.noContent()
+				.build();
 	}
 }

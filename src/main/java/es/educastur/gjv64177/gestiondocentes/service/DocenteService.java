@@ -59,7 +59,7 @@ public class DocenteService {
 		if (horarioRepository.countByDocenteId(id) > 0) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "No se puede borrar al docente: Tiene horarios asignados");
 		}
-		
+
 		docenteRepository.deleteById(id);
 	}
 
@@ -73,7 +73,7 @@ public class DocenteService {
 		docente.setDias(listaDias);
 		return docenteRepository.save(docente);
 	}
-	
+
 	public Integer comprobarDia(Docente docente, LocalDate fechaSolicitada) {
 		return docente.getDias().get(aux.getIndiceTrimestre(fechaSolicitada));
 	}

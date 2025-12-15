@@ -21,11 +21,13 @@ public class RolService {
 	}
 
 	public Rol findById(Long id) {
-		return rolRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rol no encontrado con ID: " + id));
+		return rolRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rol no encontrado con ID: " + id));
 	}
 
 	public Rol findByNombre(NombreRoles nombre) {
-		return rolRepository.findByNombre(nombre).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rol no encontrado con nombre: " + nombre));
+		return rolRepository.findByNombre(nombre)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rol no encontrado con nombre: " + nombre));
 	}
 
 	public void deleteById(Long id) {

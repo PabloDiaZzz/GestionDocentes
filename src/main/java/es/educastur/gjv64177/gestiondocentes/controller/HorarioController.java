@@ -34,12 +34,12 @@ public class HorarioController {
 	public List<Horario> getHorariosByDocente(@PathVariable Long docenteId) {
 		return horarioService.findByDocenteId(docenteId);
 	}
-	
+
 	@GetMapping("/dia/{dia}")
 	public List<Horario> getHorariosByDia(@PathVariable Integer dia) {
 		return horarioService.findByDia(dia);
 	}
-	
+
 	@GetMapping("/dia/{dia}/ciclo/{cicloCodigo}")
 	public List<ClaseDTO> getHorariosByDiaAndCiclo(@PathVariable Integer dia, @PathVariable String cicloCodigo) {
 		return horarioService.findByDiaAndCiclo(dia, cicloCodigo);
@@ -47,7 +47,8 @@ public class HorarioController {
 
 	@PostMapping
 	public ResponseEntity<Horario> createHorario(@Valid @RequestBody Horario horario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(horarioService.save(horario));
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(horarioService.save(horario));
 	}
 
 	@PutMapping("/{id}")
@@ -60,6 +61,7 @@ public class HorarioController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteHorario(@PathVariable Long id) {
 		horarioService.deleteById(id);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.noContent()
+				.build();
 	}
 }

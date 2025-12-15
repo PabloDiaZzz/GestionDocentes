@@ -25,7 +25,8 @@ public class HorarioService {
 	}
 
 	public Horario findById(Long id) {
-		return horarioRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Horario no encontrado con ID: " + id));
+		return horarioRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Horario no encontrado con ID: " + id));
 	}
 
 	public List<Horario> findByDocenteAndDia(Docente docenteAusente, int diaSemana) {
@@ -52,7 +53,9 @@ public class HorarioService {
 	}
 
 	public List<ClaseDTO> findByDiaAndCiclo(Integer dia, String cicloCodigo) {
-		return horarioRepository.findByDiaAndAsignaturaCicloCodigo(dia, cicloCodigo).stream()
-		                        .map(h -> mapper.map(h, ClaseDTO.class)).toList();
+		return horarioRepository.findByDiaAndAsignaturaCicloCodigo(dia, cicloCodigo)
+				.stream()
+				.map(h -> mapper.map(h, ClaseDTO.class))
+				.toList();
 	}
 }

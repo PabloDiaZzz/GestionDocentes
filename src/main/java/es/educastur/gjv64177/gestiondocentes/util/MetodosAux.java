@@ -19,9 +19,13 @@ public class MetodosAux {
 	 */
 	public int getIndiceTrimestre(LocalDate fecha) {
 		// Asumimos que fechasTrimestre tiene 2 fechas: [FinT1, FinT2]
-		if (!fecha.isAfter(config.getAsuntos().getFechasTrimestre().getFirst())) {
+		if (!fecha.isAfter(config.getAsuntos()
+				                   .getFechasTrimestre()
+				                   .getFirst())) {
 			return 0;
-		} else if (!fecha.isAfter(config.getAsuntos().getFechasTrimestre().getLast())) {
+		} else if (!fecha.isAfter(config.getAsuntos()
+				                          .getFechasTrimestre()
+				                          .getLast())) {
 			return 1;
 		} else {
 			return 2;

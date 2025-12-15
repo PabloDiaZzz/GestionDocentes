@@ -20,7 +20,8 @@ public class DepartamentoService {
 	}
 
 	public Departamento findById(Long id) {
-		return departamentoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Departamento no encontrado con ID: " + id));
+		return departamentoRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Departamento no encontrado con ID: " + id));
 	}
 
 	public void deleteById(Long id) {

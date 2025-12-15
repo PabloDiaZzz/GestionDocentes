@@ -18,7 +18,7 @@ public class AsignaturaService {
 	public List<Asignatura> findAll() {
 		return asignaturaRepository.findAll();
 	}
-	
+
 	public Asignatura findById(Long id) {
 		return asignaturaRepository.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Asignatura no encontrada con id: " + id));

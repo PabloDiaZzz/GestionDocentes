@@ -53,6 +53,7 @@ class AsignaturaController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> eliminarAsignatura(@PathVariable Long id) {
 		asignaturaService.deleteById(id);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.noContent()
+				.build();
 	}
 }

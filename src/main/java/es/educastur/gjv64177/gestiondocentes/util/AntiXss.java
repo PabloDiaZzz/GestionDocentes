@@ -19,7 +19,8 @@ public class AntiXss extends StdDeserializer<String> {
 	@Override
 	public String deserialize(JsonParser p, DeserializationContext ctxt) throws JacksonException {
 		String value = p.getValueAsString();
-		if (value == null) return null;
+		if (value == null)
+			return null;
 		String limpio = Jsoup.clean(value, Safelist.none());
 		return org.jsoup.parser.Parser.unescapeEntities(limpio, true);
 	}

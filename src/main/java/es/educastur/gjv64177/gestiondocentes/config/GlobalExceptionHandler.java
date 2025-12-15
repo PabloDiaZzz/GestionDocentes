@@ -16,9 +16,11 @@ public class GlobalExceptionHandler { // Metodo para ocultar las traces de los e
 	public ResponseEntity<Map<String, Object>> handleStatusException(ResponseStatusException ex) {
 		Map<String, Object> error = new HashMap<>();
 		error.put("timestamp", LocalDateTime.now());
-		error.put("status", ex.getStatusCode().value());
+		error.put("status", ex.getStatusCode()
+				.value());
 		error.put("error", ex.getReason());
 
-		return ResponseEntity.status(ex.getStatusCode()).body(error);
+		return ResponseEntity.status(ex.getStatusCode())
+				.body(error);
 	}
 }

@@ -30,7 +30,8 @@ public class DepartamentoController {
 
 	@PostMapping
 	public ResponseEntity<Departamento> createDepartamento(@Valid @RequestBody Departamento departamento) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoService.save(departamento));
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(departamentoService.save(departamento));
 	}
 
 	@PutMapping("/{id}")
@@ -43,6 +44,7 @@ public class DepartamentoController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteDepartamento(@PathVariable Long id) {
 		departamentoService.deleteById(id);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.noContent()
+				.build();
 	}
 }

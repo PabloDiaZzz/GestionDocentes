@@ -30,7 +30,8 @@ public class RolController {
 
 	@PostMapping
 	public ResponseEntity<Rol> createRol(@Valid @RequestBody Rol rol) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(rolService.save(rol));
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(rolService.save(rol));
 	}
 
 	@PutMapping("/{id}")
@@ -43,6 +44,7 @@ public class RolController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteRol(@PathVariable Long id) {
 		rolService.deleteById(id);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.noContent()
+				.build();
 	}
 }

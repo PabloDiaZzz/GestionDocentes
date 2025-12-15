@@ -26,7 +26,8 @@ public class AsuntoPropioService {
 	private MetodosAux aux;
 
 	public AsuntoPropio findById(Long id) {
-		return asuntoPropioRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Asunto propio no encontrado con ID: " + id));
+		return asuntoPropioRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Asunto propio no encontrado con ID: " + id));
 	}
 
 	public List<AsuntoPropio> findAll() {
@@ -53,7 +54,8 @@ public class AsuntoPropioService {
 	}
 
 	public AsuntoPropio findByDocenteAndFecha(Long docenteId, LocalDate fecha) {
-		return asuntoPropioRepository.findByDocenteIdAndDiaSolicitado(docenteId, fecha).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Asunto propio no encontrado para el docente ID: " + docenteId + " y fecha: " + fecha));
+		return asuntoPropioRepository.findByDocenteIdAndDiaSolicitado(docenteId, fecha)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Asunto propio no encontrado para el docente ID: " + docenteId + " y fecha: " + fecha));
 	}
 
 	public List<AsuntoPropio> findByDocente(Long docenteId) {
@@ -81,12 +83,16 @@ public class AsuntoPropioService {
 	}
 
 	public AsuntoPropio solicitarDia(AsuntoPropio asuntoPropio) {
-		Docente docenteReal = docenteRepository.findById(asuntoPropio.getDocente().getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Docente no encontrado con ID: " + asuntoPropio.getDocente().getId()));
+		Docente docenteReal = docenteRepository.findById(asuntoPropio.getDocente()
+				                                                 .getId())
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Docente no encontrado con ID: " + asuntoPropio.getDocente()
+						.getId()));
 		if (!docenteReal.comprobarDia(aux.getIndiceTrimestre(asuntoPropio.getDiaSolicitado()))) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El docente no tiene dias de asuntos propios disponibles.");
 		}
 		asuntoPropio.setDocente(docenteReal);
-		boolean existente = asuntoPropioRepository.existsByDocenteIdAndDiaSolicitado(asuntoPropio.getDocente().getId(), asuntoPropio.getDiaSolicitado());
+		boolean existente = asuntoPropioRepository.existsByDocenteIdAndDiaSolicitado(asuntoPropio.getDocente()
+				                                                                             .getId(), asuntoPropio.getDiaSolicitado());
 
 		if (existente) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ya existe una solicitud para este docente en la fecha solicitada.");
@@ -115,16 +121,19 @@ public class AsuntoPropioService {
 		}
 		AsuntoPropio existente = findByDocenteAndFecha(docente_id, fecha);
 
-		if (!existente.getEstado().equalsIgnoreCase("PENDIENTE")) {
+		if (!existente.getEstado()
+				.equalsIgnoreCase("PENDIENTE")) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La solicitud ya está cerrada.");
 		}
-		
+
 		existente.setEstado(estado.toUpperCase());
 		if (estado.equalsIgnoreCase("ACEPTADO")) {
-			if (!existente.getDocente().comprobarDia(aux.getIndiceTrimestre(existente.getDiaSolicitado()))) {
+			if (!existente.getDocente()
+					.comprobarDia(aux.getIndiceTrimestre(existente.getDiaSolicitado()))) {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El docente no tiene dias de asuntos propios disponibles.");
 			}
-			existente.getDocente().usarDia(aux.getIndiceTrimestre(fecha));
+			existente.getDocente()
+					.usarDia(aux.getIndiceTrimestre(fecha));
 			docenteRepository.save(existente.getDocente());
 		}
 		save(existente);
