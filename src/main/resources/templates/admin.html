@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/tailwind.css}">
+    <title>Admin</title>
+</head>
+
+<body class="font-sans antialiased bg-blue-50 dark:bg-neutral-900 m-0">
+    <header
+        class="bg-white dark:bg-neutral-800 w-full flex items-center justify-between overflow-hidden px-5 py-4 shadow-md">
+        <div class="flex flex-col gap-2">
+            <h1 class="text-indigo-600 dark:text-indigo-400 font-semibold text-2xl">Sistema de Gestión de Docentes</h1>
+            <p class="text-gray-600 dark:text-gray-400 font-semibold">Administrador</p>
+        </div>
+        <a class="text-gray-600 dark:text-gray-400 text-lg flex gap-2 items-center hover:text-gray-600 dark:hover:text-gray-300 dark:hover:**:fill-gray-300 hover:**:fill-gray-600 transition-colors cursor-pointer rounded-xl hover:bg-gray-100 dark:hover:bg-neutral-700 px-3 py-2 whitespace-nowrap"
+            th:href="@{/logout}">
+            <svg class="size-4 fill-gray-600 dark:fill-gray-400">
+                <use th:href="@{/assets/main.svg#logout}" width="100%" height="100%"></use>
+            </svg>
+            Cerrar sesión
+        </a>
+    </header>
+    <main class="m-7 flex flex-col lg:flex-row gap-5">
+        <div class="flex flex-col gap-5 lg:max-w-75">
+            <nav class="p-5 rounded-xl bg-white dark:bg-neutral-800 flex flex-col gap-2 shadow-md">
+
+                <label class="nav-option group">
+                    <input type="radio" name="options" class="hidden" value="horario"> <svg class="nav-icon">
+                        <use th:href="@{/assets/main.svg#calendar}"></use>
+                    </svg>
+                    <span>Horario del Centro</span>
+                </label>
+
+                <label class="nav-option group">
+                    <input type="radio" name="options" class="hidden" value="ausencias">
+                    <svg class="nav-icon">
+                        <use th:href="@{/assets/main.svg#user}"></use>
+                    </svg>
+                    <span>Gestión de Ausencias</span>
+                </label>
+
+                <label class="nav-option group">
+                    <input type="radio" name="options" class="hidden" value="guardias" checked>
+                    <svg class="nav-icon">
+                        <use th:href="@{/assets/main.svg#shield}"></use>
+                    </svg>
+                    <span>Cuadrante de Guardias</span>
+                </label>
+
+                <label class="nav-option group">
+                    <input type="radio" name="options" class="hidden" value="asuntos">
+                    <svg class="nav-icon">
+                        <use th:href="@{/assets/main.svg#paper}"></use>
+                    </svg>
+                    <span>Asuntos Propios</span>
+                </label>
+
+                <label class="nav-option group">
+                    <input type="radio" name="options" class="hidden" value="config">
+                    <svg class="nav-icon">
+                        <use th:href="@{/assets/main.svg#settings}"></use>
+                    </svg>
+                    <span>Configuración</span>
+                </label>
+
+            </nav>
+            <div
+                class="p-5 flex flex-col gap-2 justify-between text-gray-600 dark:text-gray-400 bg-white dark:bg-neutral-800 rounded-xl shadow-md">
+                <span class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
+                    <svg class="size-5 -rotate-90 fill-indigo-600 dark:fill-indigo-400">
+                        <use th:href="@{/assets/main.svg#logout}" width="100%" height="100%"></use>
+                    </svg>Panel de Administrador</span>
+                <p>Tiene acceso completo a todas las funcionalidades del sistema</p>
+            </div>
+
+        </div>
+        <div class="seccion-tab block text-black dark:text-white">
+            <section class="section-unit flex flex-col gap-5" id="horario">
+                <article class="p-5 flex flex-col gap-5 size-full bg-white dark:bg-neutral-800 rounded-xl">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-2.5">
+                            <svg class="size-6 fill-indigo-600 dark:fill-indigo-400">
+                                <use th:href="@{/assets/main.svg#calendar}"></use>
+                            </svg>
+                            <p>Horario del Centro</p>
+                        </div>
+                        <a href="#"
+                            class="text-white flex items-center gap-2 p-3 bg-gray-500 rounded-xl hover:bg-gray-600 transition">
+                            <svg class="size-6 fill-white">
+                                <use th:href="@{/assets/main.svg#print}"></use>
+                            </svg>
+                            <span>Imprimir</span>
+                        </a>
+                    </div>
+                    <div
+                        class="rounded-xl bg-blue-400/30 dark:bg-gray-800/50 border dark:border-gray-700 p-5 text-indigo-600 dark:text-indigo-400">
+                        Haga clic en cualquier celda para editar el horario. Los cambios se guardarán automáticamente.
+                    </div>
+                    <div class="flex gap-5 mx-2 my-3">
+                        <select class="cursor-pointer rounded-sm hover:bg-indigo-700 bg-indigo-600 text-white p-2 focus:outline-0" name="dept" id="selector-dept">
+                            <option value="dept">-Departamento-</option>
+                        </select>
+                        <select class="cursor-pointer rounded-sm hover:bg-indigo-700 bg-indigo-600 text-white p-2 focus:outline-0" name="docente" id="selector-docente">
+                            <option value="docente">-Docente-</option>
+                        </select>
+                    </div>
+                    <table id="horario-tabla-mañana"
+                            class="w-full text-left **:border **:border-gray-400 **:p-3 **:first:[td]:w-30 **:first:[td]:bg-black/5 dark:**:first:[td]:bg-white/5 **:[th]:bg-black/5 dark:**:[th]:bg-white/5 **:first:[td]:text-center">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Hora</th>
+                                    <th>Lunes</th>
+                                    <th>Martes</th>
+                                    <th>Mercoles</th>
+                                    <th>Jueves</th>
+                                    <th>Viernes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>8:30 - 9:25</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>9:25 - 10:20</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>10:20 - 11:15</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>11:15 - 11:45</td>
+                                    <td
+                                        class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td
+                                        class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td
+                                        class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td
+                                        class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td
+                                        class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                        RECREO</td>
+                                </tr>
+                                <tr>
+                                    <td>11:45 - 12:40</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>12:40 - 13:35</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>13:35 - 14:30</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table id="horario-tabla-tarde"
+                            class="hidden w-full text-left **:border **:border-gray-400 **:p-3 **:first:[td]:w-30 **:first:[td]:bg-black/5 dark:**:first:[td]:bg-white/5 **:[th]:bg-black/5 dark:**:[th]:bg-white/5 **:first:[td]:text-center">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Hora</th>
+                                    <th>Lunes</th>
+                                    <th>Martes</th>
+                                    <th>Mercoles</th>
+                                    <th>Jueves</th>
+                                    <th>Viernes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>15:30 - 16:25</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>16:25 - 17:20</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>17:20 - 18:15</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>18:15 - 18:45</td>
+                                    <td
+                                        class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td
+                                        class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td
+                                        class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td
+                                        class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td
+                                        class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                        RECREO</td>
+                                </tr>
+                                <tr>
+                                    <td>18:45 - 19:40</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>19:40 - 20:35</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>20:35 - 21:30</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button id="horario-swap-button"
+                            class="text-white flex items-center justify-center gap-2 p-3 bg-indigo-600 rounded-xl hover:bg-indigo-700 transition w-min whitespace-nowrap self-end cursor-pointer" onclick="swapTables()">
+                            <svg class="size-6 fill-white">
+                                <use th:href="@{/assets/main.svg#swap}"></use>
+                            </svg>
+                            <span>Turno Mañana</span>
+                        </button>
+                </article>
+            </section>
+            <section class="section-unit hidden flex-col gap-5" id="ausencias">
+                <article class="p-5 flex flex-col gap-5 size-full bg-white dark:bg-neutral-800 rounded-xl">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-2.5">
+                            <svg class="size-6 fill-indigo-600 dark:fill-indigo-400">
+                                <use th:href="@{/assets/main.svg#user}"></use>
+                            </svg>
+                            <p>Gestión de Ausencias</p>
+                        </div>
+                        <a href="#"
+                            class="text-white flex items-center gap-2 p-3 bg-indigo-600 rounded-xl hover:bg-indigo-700 transition">
+                            <svg class="size-6 fill-white">
+                                <use th:href="@{/assets/main.svg#plus}"></use>
+                            </svg>
+                            <span>Nueva Ausencia</span>
+                        </a>
+                    </div>
+                </article>
+            </section>
+            <section class="section-unit hidden flex-col gap-5" id="guardias">
+                <article class="p-5 flex flex-col gap-5 size-full bg-white dark:bg-neutral-800 rounded-xl">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-2.5">
+                            <svg class="size-6 fill-indigo-600 dark:fill-indigo-400">
+                                <use th:href="@{/assets/main.svg#shield}"></use>
+                            </svg>
+                            <p>Guardias</p>
+                        </div>
+                        <a href="#"
+                            class="text-white flex items-center gap-2 p-3 bg-gray-500 rounded-xl hover:bg-gray-600 transition">
+                            <svg class="size-6 fill-white">
+                                <use th:href="@{/assets/main.svg#print}"></use>
+                            </svg>
+                            <span>Imprimir</span>
+                        </a>
+                    </div>
+                </article>
+            </section>
+            <section class="section-unit hidden flex-col gap-5" id="asuntos">
+                <article class="p-5 flex flex-col gap-5 size-full bg-white dark:bg-neutral-800 rounded-xl">
+                    <div class="flex justify-between items-center py-3">
+                        <div class="flex items-center gap-2.5">
+                            <svg class="size-6 fill-indigo-600 dark:fill-indigo-400">
+                                <use th:href="@{/assets/main.svg#paper}"></use>
+                            </svg>
+                            <p>Asuntos Propios</p>
+                        </div>
+                    </div>
+                </article>
+            </section>
+            <section class="section-unit hidden flex-col gap-5" id="config">
+                <article class="p-5 flex flex-col gap-5 size-full bg-white dark:bg-neutral-800 rounded-xl">
+                    <div class="flex justify-between items-center py-3">
+                        <div class="flex items-center gap-2.5">
+                            <svg class="size-6 fill-indigo-600 dark:fill-indigo-400">
+                                <use th:href="@{/assets/main.svg#paper}"></use>
+                            </svg>
+                            <p>Configuración</p>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </div>
+    </main>
+</body>
+<script th:src="@{/js/admin.js}"></script>
+
+</html>

@@ -1,0 +1,45 @@
+@import "tailwindcss";
+@source "./src/main/resources/templates";
+@source "./src/main/resources/static/js";
+
+@theme {
+    --color-back: oklch(0.1448 0 0)
+}
+
+@layer utilities {
+    .boton-opt-hover {
+        @apply hover:bg-gray-100 dark:hover:bg-neutral-700;
+        @apply hover:**:text-indigo-600 dark:hover:**:text-indigo-400;
+        @apply hover:[&_svg]:fill-indigo-600 dark:hover:[&_svg]:fill-indigo-400;
+    }
+}
+
+@layer components {
+    .nav-option {
+        @apply flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer border border-transparent transition-all duration-200;
+        @apply text-gray-600 dark:text-gray-400 font-medium;
+    }
+
+    .nav-icon {
+        @apply size-5 transition-colors duration-200;
+        @apply text-gray-600 dark:text-gray-400 fill-current; 
+    }
+
+    .nav-option:hover {
+        @apply bg-gray-100 dark:bg-neutral-700;
+        @apply text-indigo-600 dark:text-indigo-400;
+    }
+    
+    .nav-option:hover .nav-icon {
+        @apply text-indigo-600 dark:text-indigo-400 fill-current;
+    }
+
+    .nav-option:has(:checked) {
+        @apply bg-indigo-400/40;
+        @apply text-indigo-600 dark:text-indigo-400;
+    }
+
+    .nav-option:has(:checked) .nav-icon {
+        @apply text-indigo-600 dark:text-indigo-400 fill-current;
+    }
+}
