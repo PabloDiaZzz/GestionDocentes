@@ -25,11 +25,11 @@ public class AsignaturaService {
 	}
 
 	public List<Asignatura> findByCiclo(String ciclo) {
-		return asignaturaRepository.findByCicloNombreIgnoreCase(ciclo);
+		return asignaturaRepository.findByCicloCodigo(ciclo);
 	}
 
 	public List<Asignatura> findByCicloAndCurso(String ciclo, Integer curso) {
-		return asignaturaRepository.findByCicloNombreIgnoreCaseAndCurso(ciclo, curso);
+		return asignaturaRepository.findByCicloCodigoAndCurso(ciclo, curso);
 	}
 
 	public Asignatura save(@Valid Asignatura asignatura) {

@@ -3,7 +3,7 @@ module.exports = {
     files: ["src/main/resources/**/*"],
     cors: true,
     notify: false,
-    reloadDelay: 250,
+    reloadDelay: 500,
     middleware: [
         function (req, res, next) {
             res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");

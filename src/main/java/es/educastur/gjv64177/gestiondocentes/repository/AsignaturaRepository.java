@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface AsignaturaRepository extends JpaRepository<Asignatura, Long> {
 	Optional<Asignatura> findBySiglas(String siglas);
 
-	List<Asignatura> findByCicloNombreIgnoreCase(String ciclo);
+	List<Asignatura> findByCicloCodigo(String ciclo);
 
-	List<Asignatura> findByCicloNombreIgnoreCaseAndCurso(String ciclo, Integer curso);
+	List<Asignatura> findByCicloCodigoAndCurso(String ciclo, Integer curso);
 }

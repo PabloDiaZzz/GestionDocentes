@@ -17,5 +17,8 @@
     "browser-sync": "^3.0.4",
     "concurrently": "^9.2.1",
     "wait-on": "^9.0.3"
+  },
+  "dependencies": {
+    "@midudev/tailwind-animations": "^0.2.0"
   }
 }

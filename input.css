@@ -1,9 +1,19 @@
 @import "tailwindcss";
+@plugin '@midudev/tailwind-animations';
 @source "./src/main/resources/templates";
 @source "./src/main/resources/static/js";
 
 @theme {
     --color-back: oklch(0.1448 0 0)
+    --animate-deslizar-izquierda-dentro: deslizar-izquierda-dentro 1s ease-in-out infinite;
+    @keyframes deslizar-izquierda-dentro {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
 }
 
 @layer utilities {
@@ -26,7 +36,7 @@
     }
 
     .nav-option:hover {
-        @apply bg-gray-100 dark:bg-neutral-700;
+        @apply bg-gray-100 dark:bg-slate-700;
         @apply text-indigo-600 dark:text-indigo-400;
     }
     
