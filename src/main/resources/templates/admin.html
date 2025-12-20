@@ -27,7 +27,7 @@
             </a>
         </div>
     </header>
-    <main class="m-7 px-3 flex flex-col xl:flex-row gap-5 justify-center xl:max-w-full">
+    <main class="m-7 px-3 flex flex-col xl:flex-row gap-5 justify-center xl:max-w-full items-stretch">
         <div class="flex flex-col gap-5 xl:w-75">
             <nav class="p-5 rounded-xl bg-white dark:bg-slate-800 flex flex-col gap-2 shadow-md">
                 <label class="nav-option group">
@@ -81,8 +81,8 @@
             </div>
 
         </div>
-        <div class="seccion-tab block text-black dark:text-white max-w-[75vw] min-w-250 ">
-            <section class="section-unit flex flex-col gap-5" id="horario">
+        <div class="seccion-tab block text-black dark:text-white max-w-[95vw] w-250">
+            <section class="section-unit hidden flex-col gap-5" id="horario">
                 <article class="p-5 flex flex-col gap-5 size-full bg-white dark:bg-slate-800 rounded-xl shadow-md">
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-2.5">
@@ -164,15 +164,15 @@
                             </tr>
                             <tr class="h-min! *:cursor-default!">
                                 <td>11:15 - 11:45</td>
-                                <td class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
                                     RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
                                     RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
                                     RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
                                     RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
                                     RECREO</td>
                             </tr>
                             <tr>
@@ -240,15 +240,15 @@
                             </tr>
                             <tr class="h-min! *:cursor-default!">
                                 <td>18:15 - 18:45</td>
-                                <td class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
                                     RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
                                     RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
                                     RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
                                     RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-yellow-500/30 text-black dark:text-white">
+                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
                                     RECREO</td>
                             </tr>
                             <tr>
@@ -288,19 +288,84 @@
                             </svg>
                             <p>Gestión de Ausencias</p>
                         </div>
-                        <a href="#"
-                            class="text-white flex items-center gap-2 p-3 bg-indigo-600 rounded-xl hover:bg-indigo-700 transition">
+                        <button onclick="nuevaAusencia()"
+                            class="text-white flex items-center gap-2 p-3 bg-indigo-600 rounded-xl hover:bg-indigo-700 transition cursor-pointer">
                             <svg class="size-6 fill-white">
                                 <use th:href="@{/assets/main.svg#plus}"></use>
                             </svg>
                             <span>Nueva Ausencia</span>
-                        </a>
+                        </button>
                     </div>
-                    <div class="flex gap-4 bg-yellow-50 dark:bg-stone-900 text-amber-900 dark:text-orange-400 rounded-xl p-5 font-[450] border border-yellow-200 dark:border-stone-700">
-                        <svg class="size-6 fill-yellow-600 dark:fill-yellow-700">
+                    <form enctype="multipart/form-data" id="form-ausencia"
+                        class="size-full bg-gray-100/50 dark:bg-slate-900/50 border border-gray-300/50 dark:border-gray-700/50 hidden flex-col gap-5 rounded-xl p-5">
+                        <p>Registrar Nueva Ausencia</p>
+                        <div class="flex justify-between gap-5">
+                            <div class="flex flex-col gap-2 flex-1/2">
+                                <label for="selectorDocente" required>Profesor</label>
+                                <select
+                                    class="rounded-xl border border-gray-300/70 p-3 dark:border-gray-700/70 focus:border-2 focus:border-indigo-600 outline-none dark:*:bg-slate-800"
+                                    name="docente" id="selectorDocente" required>
+                                    <option value="">-Profesor-</option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col gap-2 flex-1/2">
+                                <label for="fecha-input-ausencia">Fecha</label>
+                                <input
+                                    class="focus:border-2 focus:border-indigo-600 outline-none rounded-xl border border-gray-300/70 dark:border-gray-700/70 p-3 dark:scheme-dark"
+                                    type="date" name="fecha" id="fecha-input-ausencia" required>
+                            </div>
+                        </div>
+                        <div class="flex justify-between gap-5">
+                            <div class="flex flex-col gap-2 flex-1/2">
+                                <label for="selectorHora" required>Hora</label>
+                                <select
+                                    class="rounded-xl border border-gray-300/70 p-3 dark:border-gray-700/70 focus:border-2 focus:border-indigo-600 outline-none dark:*:bg-slate-800"
+                                    name="hora" id="selectorHora" required>
+                                    <option value="">-Hora-</option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col gap-2 flex-1/2">
+                                <label for="anotacion-text-ausencia">Anotación</label>
+                                <input
+                                    class="rounded-xl border border-gray-300/70 p-3 dark:border-gray-700/70 focus:border-2 focus:border-indigo-600 outline-none caret-indigo-600"
+                                    type="text" name="anotacion" id="anotacion-text-ausencia"
+                                    placeholder="Ej: Cita médica, formación, etc." autocomplete="off" required>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2 flex-1/2">
+                            <label for="">Material</label>
+                            <input
+                                class="rounded-xl border-2 border-gray-300/70 -p-px dark:border-gray-700/70 focus:border-2 focus:border-indigo-600 outline-none placeholder:text-body file:bg-indigo-600 file:p-3 file:rounded-lg file:mr-2 hover:file:bg-blue-100 dark:hover:file:bg-indigo-400 cursor-pointer file:cursor-pointer transition file:transition hover:focus:border-indigo-400"
+                                type="file" name="material" id="material-file-ausencia" accept=".pdf,.doc,.docx">
+                        </div>
+                        <div class="flex gap-3 *:cursor-pointer">
+                            <button type="submit"
+                                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                                Registrar Ausencia
+                            </button>
+                            <button type="button"
+                                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition-colors"
+                                onclick="cancelarAusencia()">
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                    <div
+                        class="flex gap-2.5 bg-yellow-50 text-amber-900  rounded-xl p-4 font-[450] border border-yellow-200">
+                        <svg class="size-6 fill-yellow-600">
                             <use th:href="@{/assets/main.svg#info}"></use>
                         </svg>
-                        <p>Al registrar una ausencia, el sistema asignará automáticamente una guardia siguiendo el algoritmo establecido.</p>
+                        <p>Al registrar una ausencia, el sistema asignará automáticamente una guardia siguiendo el
+                            algoritmo establecido.</p>
+                    </div>
+                    <div class="flex flex-col gap-5 size-full" id="ausencias-body">
+                    </div>
+                    <div class="hidden flex-col gap-5 size-full items-center text-gray-600 dark:text-gray-400 justify-center"
+                        id="sin-ausencias">
+                        <svg class="size-12 fill-gray-600 dark:fill-gray-400">
+                            <use th:href="@{/assets/main.svg#user}"></use>
+                        </svg>
+                        <p>No hay ausencias registradas</p>
                     </div>
                 </article>
             </section>
@@ -314,16 +379,43 @@
                             <p>Guardias</p>
                         </div>
                         <button onclick="printGuardias()"
-                            class="text-white flex items-center gap-2 p-3 bg-gray-500 rounded-xl hover:bg-gray-600 transition">
+                            class="text-white flex items-center gap-2 p-3 bg-gray-500 rounded-xl hover:bg-gray-600 transition cursor-pointer">
                             <svg class="size-6 fill-white">
                                 <use th:href="@{/assets/main.svg#print}"></use>
                             </svg>
                             <span>Imprimir</span>
                         </button>
                     </div>
+                    <div class="flex flex-col gap-3 items-start">
+                        <label for="selector-fecha-guardia" class="text-gray-600 dark:text-gray-400">Seleccionar
+                            Fecha</label>
+                        <input
+                            class="rounded-lg border border-gray-300/70 p-2.5 dark:border-gray-700/70 focus:border-2 focus:border-indigo-600 outline-none dark:*:bg-slate-800 dark:scheme-dark"
+                            type="date" name="fecha" id="selector-fecha-guardia">
+                    </div>
+                    <div class="flex flex-col gap-5 size-full" id="guardias-body">
+                    </div>
+                    <div class="flex flex-col items-center justify-center gap-2.5 py-5 text-gray-600 dark:text-gray-400"
+                        id="sin-guardias">
+                        <svg class="size-12 fill-gray-600 dark:fill-gray-400">
+                            <use th:href="@{/assets/main.svg#shield}"></use>
+                        </svg>
+                        <p>No hay guardias registradas</p>
+                    </div>
+                    <div
+                        class="flex flex-col gap-5 size-full rounded-xl bg-gray-50  border border-gray-200 p-6 mt-8 dark:bg-slate-700/30 dark:border-slate-500">
+                        <h3 class="mb-4">Algoritmo de Asignación de Guardias</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-400">
+                            <li>Se asigna a un profesor del mismo departamento que el ausente (con menos guardias
+                                realizadas)</li>
+                            <li>Si no es posible, se asigna a un profesor que dé clase al mismo grupo (con menos
+                                guardias realizadas)</li>
+                            <li>Si no es posible, se asigna al profesor con menos guardias realizadas en general</li>
+                        </ol>
+                    </div>
                 </article>
             </section>
-            <section class="section-unit hidden flex-col gap-5" id="asuntos">
+            <section class="section-unit flex flex-col gap-5" id="asuntos">
                 <article class="p-5 flex flex-col gap-5 size-full bg-white dark:bg-slate-800 rounded-xl shadow-md">
                     <div class="flex justify-between items-center py-3">
                         <div class="flex items-center gap-2.5">
@@ -333,6 +425,23 @@
                             <p>Asuntos Propios</p>
                         </div>
                     </div>
+                    <div class="text-black bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                        <h3 class="text-sm mb-2">Criterios de Asignación (por orden de prioridad):</h3>
+                        <ol class="list-decimal list-inside space-y-1 text-sm text-yellow-800">
+                            <li>Tipo de funcionario: Carrera &gt; En Prácticas &gt; Interino</li>
+                            <li>Mayor antigüedad en el centro</li>
+                            <li>Mayor nota de oposición / mejor posición en lista</li>
+                        </ol>
+                    </div>
+                    <div class="flex flex-col gap-5" id="asuntos-body">
+                    </div>
+                    <div class="flex flex-col items-center justify-center gap-2.5 py-5 text-gray-600 dark:text-gray-400"
+                        id="sin-asuntos">
+                        <svg class="size-12 fill-gray-600 dark:fill-gray-400">
+                            <use th:href="@{/assets/main.svg#paper}"></use>
+                        </svg>
+                        <p>No hay asuntos propios registrados</p>
+                    </div>
                 </article>
             </section>
             <section class="section-unit hidden flex-col gap-5" id="config">
@@ -340,7 +449,7 @@
                     <div class="flex justify-between items-center py-3">
                         <div class="flex items-center gap-2.5">
                             <svg class="size-6 fill-indigo-600 dark:fill-indigo-400">
-                                <use th:href="@{/assets/main.svg#paper}"></use>
+                                <use th:href="@{/assets/main.svg#settings}"></use>
                             </svg>
                             <p>Configuración</p>
                         </div>
@@ -349,9 +458,53 @@
             </section>
         </div>
     </main>
-    <svg class="hidden size-6 bg-gray-400/20 fill-gray-600 dark:fill-gray-400" id="edit-icon">
-        <use th:href="@{/assets/main.svg#edit}"></use>
-    </svg>
+    <template id="template-guardia">
+        <div class="size-full border-2 border-gray-400/50 dark:border-gray-700/50 rounded-xl flex flex-col gap-2 p-6">
+            <div class="flex items-center gap-3 mb-3">
+                <span class="hora-guardia bg-indigo-100 text-indigo-800 px-4 py-2 rounded-lg"></span>
+                <span
+                    class="span-realizada bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1"><svg
+                        class="size-4 fill-green-800">
+                        <use th:href="@{/assets/main.svg#check}"></use>
+                    </svg>Realizada</span>
+                <span
+                    class="span-pendiente bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1"><svg
+                        class="size-4 fill-yellow-800">
+                        <use th:href="@{/assets/main.svg#pend}"></use>
+                    </svg>Pendiente</span>
+                <span class="fecha-guardia rounded-full p-1 bg-red-100 text-sm text-red-800 px-2.5 h-fit"></span>
+            </div>
+            <div class="flex *:flex-1/2">
+                <div class="flex flex-col gap-2">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Profesor Ausente:</p>
+                    <p class="docente-ausente text-gray-900 dark:text-gray-100"></p>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Profesor Cubriendo:</p>
+                    <p class="docente-cubriendo text-gray-900 dark:text-gray-100"></p>
+                </div>
+            </div>
+            <div
+                class="size-full p-3 bg-blue-50 dark:bg-gray-800 border border-blue-200 dark:border-gray-700 rounded-xl flex items-center gap-3 mt-3 text-blue-800 dark:text-violet-300">
+                <svg class="size-6 fill-blue-800 dark:fill-violet-300">
+                    <use th:href="@{/assets/main.svg#paper}"></use>
+                </svg>
+                <p class="material-guardia">Sin material asignado</p>
+            </div>
+            <hr class="my-3 border-gray-400/50 dark:border-gray-700/50">
+            <button
+                class="hidden justify-center items-center flex-1 px-4 py-2 rounded-lg guardia-boton-realizada transition-colors bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-200 dark:hover:bg-green-300 cursor-pointer">Marcar
+                como Realizada</button>
+            <button
+                class="guardia-boton-pendiente hidden justify-center items-center flex-1 px-4 py-2 rounded-lg transition-colors bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-200 dark:hover:bg-yellow-300 cursor-pointer">Marcar
+                como Pendiente</button>
+        </div>
+    </template>
+    <template id="template-edit-icon">
+        <svg class="hidden size-6 bg-gray-400/20 fill-gray-600 dark:fill-gray-400" id="edit-icon">
+            <use th:href="@{/assets/main.svg#edit}"></use>
+        </svg>
+    </template>
     <dialog
         class="left-1/2 top-1/2 p-5 hidden open:flex flex-col gap-5 text-white bg-white dark:bg-slate-800 rounded-xl shadow-md"
         id="dialog-edit-horario">
@@ -368,7 +521,9 @@
                 name="selector-asignatura" id="selector-asignatura" required>
                 <option value="">-Asignatura-</option>
             </select>
-            <select class="p-2 rounded-xl focus:rounded-b-sm bg-indigo-600 *:bg-gray-100 dark:*:bg-slate-900 *:text-black dark:*:text-white focus:outline-0" id="selector-dia" ...>
+            <select
+                class="p-2 rounded-xl focus:rounded-b-sm bg-indigo-600 *:bg-gray-100 dark:*:bg-slate-900 *:text-black dark:*:text-white focus:outline-0"
+                id="selector-dia" ...>
                 <option value="">-Día-</option>
                 <option value="1">Lunes</option>
                 <option value="2">Martes</option>
@@ -376,7 +531,9 @@
                 <option value="4">Jueves</option>
                 <option value="5">Viernes</option>
             </select>
-            <select class="p-2 rounded-xl focus:rounded-b-sm bg-indigo-600 *:bg-gray-100 dark:*:bg-slate-900 *:text-black dark:*:text-white focus:outline-0" id="selector-hora" ...>
+            <select
+                class="p-2 rounded-xl focus:rounded-b-sm bg-indigo-600 *:bg-gray-100 dark:*:bg-slate-900 *:text-black dark:*:text-white focus:outline-0"
+                id="selector-hora" ...>
                 <option value="">-Hora-</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -407,11 +564,119 @@
             </div>
         </form>
     </dialog>
-    <div id="alerta" class="hidden cursor-crosshair z-50 bg-indigo-100 dark:bg-slate-700 border-none outline-none dark:text-white rounded-xl shadow-lg p-3 max-w-100 animate-fade-in-left overflow-hidden">
-        <p id="alerta-texto"></p>
-        <div id="alerta-slide" class="bg-indigo-600 dark:bg-white h-0.5 w-full animate-[deslizar-izquierda-dentro_4s_linear] transition-transform absolute bottom-0 left-0"></div>
+    <template id="template-alerta">
+        <div
+            class="cursor-crosshair z-50 bg-indigo-100/10 dark:bg-slate-700/10 backdrop-blur-sm border-none outline-none dark:text-white rounded-xl shadow-lg p-3 max-w-100 animate-fade-in-left overflow-hidden">
+            <p class="whitespace-pre-line" id="alerta-texto"></p>
+            <div id="alerta-slide"
+                class="bg-indigo-600 dark:bg-white h-0.5 w-full animate-[deslizar-izquierda-dentro_4s_linear] transition-transform absolute bottom-0 left-0">
+            </div>
+        </div>
+    </template>
+    <div id="alerta-cuerpo"
+        class="fixed top-10 right-5 left-auto z-50 flex flex-col gap-2 h-screen w-100 items-end pointer-events-none">
     </div>
-    <div id="alerta-cuerpo" class="fixed top-10 right-5 left-auto z-50 flex flex-col gap-2 h-screen w-100 items-end pointer-events-none"></div>
+    <template id="template-ausencia">
+        <div
+            class="w-full border border-gray-200 dark:border-slate-700 rounded-xl p-3.5 hover:shadow-md dark:hover:shadow-xl shadow-none transition flex flex-col gap-2">
+            <div class="flex justify-between -mb-1.5">
+                <div class="flex gap-2">
+                    <span class="fecha-ausencia rounded-full p-1 bg-red-100 text-sm text-red-800 px-2.5 h-fit"></span>
+                    <span class="hora-ausencia rounded-xl p-1 bg-blue-100 text-sm text-blue-800 px-2 h-fit"></span>
+                </div>
+                <button onclick="borrarAusencia(this.parentNode.parentNode)"
+                    class="cursor-pointer hover:bg-red-400/40 rounded-xl transition p-1.5">
+                    <svg class="size-6 fill-red-500">
+                        <use th:href="@{/assets/main.svg#trash}"></use>
+                    </svg>
+                </button>
+            </div>
+            <p class="persona-ausencia text-md"></p>
+            <p class="observacion-ausencia text-sm text-gray-600 dark:text-gray-400"></p>
+        </div>
+    </template>
+    <template id="template-asunto">
+        <div class="border-2 border-gray-200 dark:border-gray-700 flex flex-col gap-3 items-start rounded-xl p-4">
+            <span class="text-prioridad text-sm text-indigo-800 bg-indigo-50 px-3 py-1 rounded-lg">Prioridad #<span
+                    class="num-prioridad">0</span></span>
+            <div class="flex gap-3">
+                <p class="nombre-docente">María García López</p>
+                <span
+                    class="span-aprobado bg-green-100 text-green-800 px-3 py-1  rounded-full text-sm hidden items-center gap-1"><svg
+                        class="size-4 fill-green-800">
+                        <use th:href="@{/assets/main.svg#check}"></use>
+                    </svg>Aprobado</span>
+                <span
+                    class="span-pendiente bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1"><svg
+                        class="size-4 fill-yellow-800">
+                        <use th:href="@{/assets/main.svg#pend}"></use>
+                    </svg>Pendiente</span>
+                <span
+                    class="span-rechazado bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1"><svg
+                        class="size-4 fill-red-800">
+                        <use th:href="@{/assets/main.svg#cross}"></use>
+                    </svg>Rechazado</span>
+            </div>
+            <div
+                class="flex justify-beetween gap-3 *:flex-1 w-full *:bg-gray-50 *:px-3 *:py-2 *:rounded-md *:text-sm *:text-gray-600 dark:*:text-gray-400 dark:*:bg-slate-900">
+                <p>Tipo: <span class="rol-docente text-gray-900 dark:text-gray-100"></span></p>
+                <p>Antigüedad: <span class="antiguedad-docente text-black dark:text-gray-100"></span></p>
+                <p>Posición: <span class="posicion-docente text-black dark:text-gray-100"></span></p>
+            </div>
+            <div class="flex gap-3 w-full *:flex-1 mx-1">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Fecha Solicitada:</p>
+                    <p class="fecha-asunto text-gray-900 dark:text-gray-100">15/12/2025</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Trimestre:</p>
+                    <p class="trimestre-asunto text-gray-900 dark:text-gray-100">1º Trimestre</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Guardias Realizadas:</p>
+                    <p class="guardias-realizadas-asunto text-gray-900 dark:text-gray-100">17</p>
+                </div>
+            </div>
+            <div
+                class="asunto-materiales hidden gap-2 rounded-xl bg-green-50 border border-green-200 p-3 w-full items-center dark:bg-green-500/50 dark:border-green-700">
+                <svg class="size-5.5 fill-green-600 dark:fill-green-200">
+                    <use th:href="@{/assets/main.svg#check}"></use>
+                </svg>
+                <span class="text-green-800 dark:text-green-200">Materiales subidos</span>
+            </div>
+            <hr class="my-3 border-gray-200 dark:border-gray-600 w-full">
+            <div class="asunto-btns flex gap-2 w-full">
+                <button
+                    class="btn-aceptar flex-1/2 border bg-green-600 hover:bg-green-700 px-3 py-2 rounded-xl border-none text-white flex gap-2 justify-center items-center cursor-pointer"
+                    onclick="aprobarAsunto(this.parentNode.parentNode)">
+                    <svg class="size-5.5 fill-white">
+                        <use th:href="@{/assets/main.svg#check}"></use>
+                    </svg>
+                    <span>Aprobar y enviar email</span>
+                </button>
+                <button
+                    class="btn-rechazar flex-1/2 border bg-red-600 px-3 py-2 rounded-xl border-none text-white flex gap-2 justify-center items-center cursor-pointer hover:bg-red-700"
+                    onclick="denegarAsunto(this.parentNode.parentNode)">
+                    <svg class="size-5.5 fill-white">
+                        <use th:href="@{/assets/main.svg#cross}"></use>
+                    </svg>
+                    <span>Denegar y enviar email</span>
+                </button>
+            </div>
+            <div class="mail-aprobado hidden gap-2 items-center text-green-700 dark:text-green-500 text-sm -mt-1">
+                <svg class="size-4.5 fill-green-700 dark:fill-green-500">
+                    <use th:href="@{/assets/main.svg#mail}"></use>
+                </svg>
+                <span>Email de aprobación enviado</span>
+            </div>
+            <div class="mail-denegado hidden gap-2 items-center text-red-700 dark:text-red-500 text-sm -mt-1">
+                <svg class="size-4.5 fill-red-700 dark:fill-red-500">
+                    <use th:href="@{/assets/main.svg#mail}"></use>
+                </svg>
+                <span>Email de denegación enviado</span>
+            </div>
+        </div>
+    </template>
 </body>
 <script th:src="@{/js/admin.js}"></script>
 

@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             data.forEach(docente => {
                 const option = document.createElement('option');
                 option.value = docente.id;
-                option.textContent = docente.siglas;
+                option.textContent = docente.nombre + ' ' + docente.apellidos + ' - ' + docente.siglas;
                 selectorDocente.appendChild(option);
             })
         })
@@ -66,6 +66,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const docenteId = selectorDocente.value;
         cargarHorarioDocente(docenteId);
     })
+
+    const formAusencia = document.getElementById('form-ausencia');
+    if (formAusencia) {
+        formAusencia.addEventListener('submit', procesarGuardarAusencia);
+    }
+    cargarAusencias();
+    setupGuardias();
+    cargarAsuntos();
 })
 
 radios.forEach(radio => {
@@ -86,7 +94,7 @@ filas.forEach((fila, hora) => {
 
     celdas.forEach((celda, dia) => {
         celda.classList.add('relative', 'group');
-        const img = document.getElementById('edit-icon').cloneNode(true);
+        const img = document.getElementById('template-edit-icon').content.cloneNode(true).firstElementChild;
         img.classList.add(
             'absolute', 'top-0', 'left-0', 'w-full', 'h-full',
             'group-hover:block', 'cursor-pointer'
@@ -288,13 +296,16 @@ async function cargarHorarioDocente(docenteId) {
                                 ${nombreAsig}
                             </span>
                             <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                                📍Aula: ${aula} ${cursoCiclo}
+                                Aula: ${aula}
+                            </span>
+                            <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+                                Curso: ${cursoCiclo}
                             </span>
                         </div>
                     `;
-                } else {celda.innerHTML = '';}
+                } else { celda.innerHTML = ''; }
 
-                const img = document.getElementById('edit-icon').cloneNode(true);
+                const img = document.getElementById('template-edit-icon').content.cloneNode(true).firstElementChild;
                 img.classList.add(
                     'absolute', 'top-0', 'left-0', 'w-full', 'h-full',
                     'group-hover:block', 'cursor-pointer', 'backdrop-blur-[2px]'
@@ -316,7 +327,6 @@ async function cargarHorarioDocente(docenteId) {
     }
 }
 
-// --- FUNCIÓN 2: GUARDAR LOS DATOS (Al hacer click en Guardar) ---
 async function guardarHorario() {
     const form = document.getElementById('form-edit-horario');
     const dialog = document.getElementById('dialog-edit-horario');
@@ -401,17 +411,10 @@ async function borrarHorario() {
 
 function mostrarAlerta(mensaje) {
     const container = document.getElementById('alerta-cuerpo');
-    const template = document.getElementById('alerta');
-    if (!template || !container) return;
-    const alerta = template.cloneNode(true);
-    alerta.removeAttribute('id');
+    const alerta = document.getElementById('template-alerta').content.cloneNode(true).firstElementChild;
     const textoElement = alerta.querySelector('#alerta-texto');
-    if (textoElement) {
-        textoElement.textContent = mensaje;
-    }
+    textoElement.textContent = mensaje;
     container.appendChild(alerta);
-    alerta.classList.add('flex');
-    alerta.classList.remove('hidden');
 
     setTimeout(() => {
         alerta.classList.remove('animate-fade-in-left');
@@ -431,7 +434,7 @@ function printHorarios() {
 
     const original1 = document.getElementById('horario-tabla-mañana');
     const original2 = document.getElementById('horario-tabla-tarde');
-    
+
     if (!original1 || !original2) return;
 
     const table1 = original1.cloneNode(true);
@@ -439,7 +442,7 @@ function printHorarios() {
 
     table1.classList.remove('hidden');
     table2.classList.remove('hidden');
-    
+
     // Función auxiliar para envolver
     function createPageWrapper(table, isFirst) {
         const wrapper = document.createElement('div');
@@ -453,7 +456,7 @@ function printHorarios() {
 
     printContainer.appendChild(createPageWrapper(table1, true));
     printContainer.appendChild(createPageWrapper(table2, false));
-    
+
     document.body.appendChild(printContainer);
 
     const style = document.createElement('style');
@@ -506,4 +509,440 @@ function printHorarios() {
             document.head.removeChild(style);
         }
     }, 100);
+}
+
+async function cargarAusencias() {
+    const ausencias = document.getElementById('ausencias-body');
+    const selectorDocente = document.getElementById('form-ausencia').querySelector('#selectorDocente');
+    var horas = Array.from(document.querySelectorAll('#horario-tabla-mañana tbody tr')).concat(Array.from(document.querySelectorAll('#horario-tabla-tarde tbody tr')));
+    horas.splice(10, 1)
+    horas.splice(3, 1)
+    horas = horas.map(hora => hora.children[0].textContent)
+    ausencias.innerHTML = '';
+    fetch(`/api/guardias/hoy-adelante`)
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(ausencia => {
+                const ausenciaDiv = document.getElementById('template-ausencia').content.cloneNode(true).firstElementChild;
+                const ausenciaFecha = ausenciaDiv.querySelector('.fecha-ausencia');
+                const ausenciaHora = ausenciaDiv.querySelector('.hora-ausencia');
+                const ausenciaPersona = ausenciaDiv.querySelector('.persona-ausencia');
+                const obsAusencia = ausenciaDiv.querySelector('.observacion-ausencia');
+                ausenciaFecha.textContent = parseFecha(ausencia.fecha);
+                ausenciaFecha.dataset.value = ausencia.fecha;
+                ausenciaHora.textContent = horas[parseInt(ausencia.horario.hora) - 1];
+                ausenciaHora.dataset.value = ausencia.horario.hora;
+                ausenciaPersona.textContent = ausencia.docenteAusente.nombre + ' ' + ausencia.docenteAusente.apellidos;
+                ausenciaPersona.dataset.value = ausencia.docenteAusente.id;
+                obsAusencia.textContent = ausencia.anotacion;
+                ausenciaDiv.id = '';
+                ausencias.appendChild(ausenciaDiv);
+            });
+            if (data.length == 0) {
+                document.getElementById('sin-ausencias').classList.remove('hidden');
+                document.getElementById('sin-ausencias').classList.add('flex');
+            } else {
+                document.getElementById('sin-ausencias').classList.remove('flex');
+                document.getElementById('sin-ausencias').classList.add('hidden');
+            }
+        })
+        .catch(error => console.error(error));
+
+    const docentes = fetch(`/api/docentes`).then(res => res.json()).then(data => {
+        selectorDocente.innerHTML = '<option value="">-Docente-</option>';
+        data.sort((a, b) => a.nombre.localeCompare(b.nombre) || a.apellidos.localeCompare(b.apellidos));
+        data.forEach(docente => {
+            const option = document.createElement('option');
+            option.value = docente.id;
+            option.textContent = docente.nombre + ' ' + docente.apellidos + ' - ' + docente.siglas;
+            selectorDocente.appendChild(option);
+        })
+    })
+    const input = document.getElementById('fecha-input-ausencia');
+    const hoy = new Date();
+    const dia = String(hoy.getDate()).padStart(2, '0');
+    const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+    const anio = hoy.getFullYear();
+    const fechaMinima = `${anio}-${mes}-${dia}`;
+    input.min = fechaMinima;
+
+    const selectorHora = document.getElementById('selectorHora');
+    selectorHora.innerHTML = '<option value="">-Hora-</option>';
+    horas.forEach((hora, index) => {
+        const option = document.createElement('option');
+        option.value = index + 1;
+        option.textContent = hora;
+        selectorHora.appendChild(option);
+    })
+}
+
+function cancelarAusencia() {
+    const formAusencia = document.getElementById('form-ausencia');
+    formAusencia.classList.toggle('hidden');
+    formAusencia.classList.toggle('flex');
+    formAusencia.reset();
+}
+
+function parseFecha(fechaInput) {
+    const [anio, mes, dia] = fechaInput.split('-');
+    const fecha = new Date(anio, mes - 1, dia);
+
+    const opciones = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+
+    const resultado = fecha.toLocaleDateString('es-ES', opciones);
+    return resultado;
+}
+
+function nuevaAusencia() {
+    const formAusencia = document.getElementById('form-ausencia');
+    formAusencia.reset();
+    formAusencia.classList.remove('hidden');
+    formAusencia.classList.add('flex');
+}
+
+async function procesarGuardarAusencia(e) {
+    e.preventDefault();
+    const formAusencia = e.target;
+    try {
+        const fecha = document.getElementById('fecha-input-ausencia').value;
+        const docenteId = document.getElementById('selectorDocente').value;
+        const hora = document.getElementById('selectorHora').value;
+        const diaSemana = (new Date(fecha).getDay() || 7);
+        const horarioId = await fetch(`/api/horarios/docente/${docenteId}`).then(res => res.json()).then(data => {
+            const horario = Array.from(data).find(h => h.hora == hora && h.dia == diaSemana);
+            if (!horario) {
+                throw new Error('El docente no tiene clase en esa hora')
+            }
+            return horario.id;
+        });
+
+        const formData = new FormData();
+        formData.append('fecha', fecha);
+        formData.append('horarioId', horarioId);
+        formData.append('anotacion', document.getElementById('anotacion-text-ausencia').value);
+
+        const fileInput = document.getElementById('material-file-ausencia');
+        if (fileInput && fileInput.files[0]) {
+            formData.append('archivo', fileInput.files[0]);
+        }
+
+        const response = await fetch(`/api/guardias/generar`, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            mostrarAlerta('Ausencia guardada correctamente');
+            formAusencia.classList.toggle('hidden');
+            formAusencia.classList.toggle('flex');
+            if (typeof cargarGuardias === 'function') cargarGuardias();
+        } else {
+            const textoError = await response.text();
+            mostrarAlerta('Error al crear: ' + textoError);
+        }
+    } catch (error) {
+        mostrarAlerta(error.message);
+    }
+}
+
+async function borrarAusencia(el) {
+    await fetch(`/api/guardias/docente-ausente/${el.querySelector('.persona-ausencia').dataset.value}`).then(res => res.json()).then(data => {
+        const guardiaId = Array.from(data).find(guardia => guardia.fecha == el.querySelector('.fecha-ausencia').dataset.value && guardia.horario.hora == el.querySelector('.hora-ausencia').dataset.value).id
+        fetch(`/api/guardias/${guardiaId}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.ok) {
+                    mostrarAlerta('Ausencia eliminada correctamente');
+                    el.remove();
+                } else {
+                    mostrarAlerta('Error al eliminar la ausencia');
+                }
+            })
+            .catch(error => mostrarAlerta(error.message));
+    })
+        .catch(error => mostrarAlerta(error.message));
+}
+
+function setupGuardias() {
+    const selectorFecha = document.getElementById('selector-fecha-guardia');
+    selectorFecha.addEventListener('change', cargarGuardias);
+    cargarGuardias();
+}
+
+async function createGuardia(guardia) {
+    try {
+        const guardias = document.getElementById('guardias-body');
+        const guardiaDiv = document.getElementById('template-guardia').content.cloneNode(true).firstElementChild;
+        const material = guardiaDiv.querySelector('.material-guardia');
+        var horas = Array.from(document.querySelectorAll('#horario-tabla-mañana tbody tr')).concat(Array.from(document.querySelectorAll('#horario-tabla-tarde tbody tr')));
+        horas.splice(10, 1)
+        horas.splice(3, 1)
+        horas = horas.map(hora => hora.children[0].textContent)
+        guardiaDiv.dataset.value = guardia.id;
+        guardiaDiv.querySelector('.hora-guardia').textContent = horas[guardia.horario.hora - 1];
+        guardiaDiv.querySelector('.hora-guardia').dataset.value = guardia.horario.hora;
+        guardiaDiv.querySelector('.fecha-guardia').textContent = parseFecha(guardia.fecha);
+        guardiaDiv.querySelector('.fecha-guardia').dataset.value = guardia.fecha;
+        guardiaDiv.querySelector('.docente-ausente').textContent = guardia.docenteAusente.nombre + ' ' + guardia.docenteAusente.apellidos;
+        guardiaDiv.querySelector('.docente-ausente').dataset.value = guardia.docenteAusente.id;
+        guardiaDiv.querySelector('.docente-cubriendo').textContent = guardia.docenteCubriendo.nombre + ' ' + guardia.docenteCubriendo.apellidos;
+        guardiaDiv.querySelector('.docente-cubriendo').dataset.value = guardia.docenteCubriendo.id;
+        if (guardia.material != null && guardia.material != '') {
+            const link = document.createElement('a');
+            link.textContent = guardia.material.split('/')[guardia.material.split('/').length - 1];
+            link.href = `/api/guardias/${guardia.id}/material`;
+            link.target = '_blank';
+            link.className = 'underline hover:text-indigo-600';
+            material.innerHTML = '';
+            material.appendChild(link);
+        }
+        pintarGuardia(guardiaDiv, guardia);
+        guardiaDiv.querySelector('.guardia-boton-realizada').addEventListener('click', () => {
+            alternarGuardia(guardiaDiv)
+        })
+        guardiaDiv.querySelector('.guardia-boton-pendiente').addEventListener('click', () => {
+            alternarGuardia(guardiaDiv)
+        })
+        return guardiaDiv;
+    } catch (error) {
+        mostrarAlerta(`Error al cargar la guardia id + ${guardia.id}\n${error.message}`);
+    }
+}
+
+async function cargarGuardias() {
+    const fecha = document.getElementById('selector-fecha-guardia').value;
+    const guardiasBody = document.getElementById('guardias-body');
+    guardiasBody.innerHTML = ''
+    if (fecha == '') {
+        fetch(`/api/guardias/hoy-adelante`).then(res => res.json()).then(data => {
+            const guardias = Array.from(data).sort((a, b) => a.fecha.localeCompare(b.fecha) || a.horario.hora - b.horario.hora)
+            Promise.all(guardias.map(guardia => createGuardia(guardia))).then(guardias => {
+                guardias.forEach(g => guardiasBody.appendChild(g))
+            })
+            document.getElementById('sin-guardias').classList.add('hidden')
+            document.getElementById('sin-guardias').classList.remove('flex')
+            if (data.length == 0) {
+                document.getElementById('sin-guardias').classList.remove('hidden')
+                document.getElementById('sin-guardias').classList.add('flex')
+            }
+        })
+    } else {
+        fetch(`/api/guardias/fecha/${fecha}`).then(res => res.json()).then(data => {
+            Array.from(data).sort((a, b) => a.fecha.localeCompare(b.fecha) || a.horario.hora - b.horario.hora).forEach(guardia => {
+                createGuardia(guardia);
+            })
+            document.getElementById('sin-guardias').classList.add('hidden')
+            document.getElementById('sin-guardias').classList.remove('flex')
+            if (data.length == 0) {
+                document.getElementById('sin-guardias').classList.remove('hidden')
+                document.getElementById('sin-guardias').classList.add('flex')
+            }
+        })
+    }
+}
+
+async function alternarGuardia(guardia) {
+    const guardiaId = guardia.dataset.value;
+    const guardiaData = await fetch(`/api/guardias/id/${guardiaId}`).then(res => res.json());
+    guardiaData.realizada = !guardiaData.realizada;
+    fetch(`/api/guardias/${guardiaId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(guardiaData)
+    })
+        .then(response => {
+            if (response.ok) {
+                mostrarAlerta('Guardia marcada como ' + (guardiaData.realizada ? 'realizada' : 'pendiente'));
+                pintarGuardia(guardia, guardiaData);
+            } else {
+                mostrarAlerta('Error al alternar la guardia');
+            }
+        })
+        .catch(error => mostrarAlerta(error.message));
+}
+
+function pintarGuardia(guardiaDiv, guardia) {
+    if (guardia.realizada) {
+        guardiaDiv.querySelector('.guardia-boton-realizada').classList.add('hidden')
+        guardiaDiv.querySelector('.guardia-boton-realizada').classList.remove('flex')
+        guardiaDiv.querySelector('.span-realizada').classList.remove('hidden')
+        guardiaDiv.querySelector('.span-realizada').classList.add('flex')
+        guardiaDiv.querySelector('.span-pendiente').classList.add('hidden')
+        guardiaDiv.querySelector('.span-pendiente').classList.remove('flex')
+        guardiaDiv.querySelector('.guardia-boton-pendiente').classList.add('flex')
+        guardiaDiv.querySelector('.guardia-boton-pendiente').classList.remove('hidden')
+    } else {
+        guardiaDiv.querySelector('.guardia-boton-realizada').classList.remove('hidden')
+        guardiaDiv.querySelector('.guardia-boton-realizada').classList.add('flex')
+        guardiaDiv.querySelector('.span-realizada').classList.add('hidden')
+        guardiaDiv.querySelector('.span-realizada').classList.remove('flex')
+        guardiaDiv.querySelector('.span-pendiente').classList.remove('hidden')
+        guardiaDiv.querySelector('.span-pendiente').classList.add('flex')
+        guardiaDiv.querySelector('.guardia-boton-pendiente').classList.remove('flex')
+        guardiaDiv.querySelector('.guardia-boton-pendiente').classList.add('hidden')
+    }
+}
+
+async function pintarAsunto(asuntoDiv, asunto) {
+    const spanPendiente = asuntoDiv.querySelector('.span-pendiente');
+    const spanAprobado = asuntoDiv.querySelector('.span-aprobado');
+    const spanRechazado = asuntoDiv.querySelector('.span-rechazado');
+    switch (asunto.estado.toLowerCase()) {
+        case 'pendiente':
+            spanPendiente.classList.remove('hidden');
+            spanPendiente.classList.add('flex');
+            break;
+        case 'aceptado':
+            spanAprobado.classList.remove('hidden');
+            spanAprobado.classList.add('flex');
+            asuntoDiv.querySelector('.asunto-btns').classList.add('hidden');
+            asuntoDiv.querySelector('.asunto-btns').classList.remove('flex');
+            asuntoDiv.querySelector('.mail-aprobado').classList.remove('hidden');
+            asuntoDiv.querySelector('.mail-aprobado').classList.add('flex');
+            await fetch(`/api/guardias/docente-ausente/${asunto.docente.id}`).then(res => res.json()).then(data => {
+                if (Array.from(data).filter(g => g.fecha == asunto.diaSolicitado && g.material != null && g.material != '').length != 0) {
+                    asuntoDiv.querySelector('.asunto-materiales').classList.remove('hidden');
+                    asuntoDiv.querySelector('.asunto-materiales').classList.add('flex');
+                }
+            })
+            asuntoDiv.querySelector('.text-prioridad').firstChild.nodeValue = 'Sin Prioridad';
+            asuntoDiv.querySelector('.num-prioridad').textContent = '';
+            break;
+        case 'denegado':
+            spanRechazado.classList.remove('hidden');
+            spanRechazado.classList.add('flex');
+            asuntoDiv.querySelector('.asunto-btns').classList.add('hidden');
+            asuntoDiv.querySelector('.asunto-btns').classList.remove('flex');
+            asuntoDiv.querySelector('.mail-denegado').classList.remove('hidden');
+            asuntoDiv.querySelector('.mail-denegado').classList.add('flex');
+            asuntoDiv.querySelector('.text-prioridad').firstChild.nodeValue = 'Sin Prioridad';
+            asuntoDiv.querySelector('.num-prioridad').textContent = '';
+            break;
+    }
+
+    const rolMap = {
+        'interino': 'Interino',
+        'practicas': 'Funcionario en Prácticas',
+        'carrera': 'Funcionario de Carrera'
+    };
+    asuntoDiv.querySelector('.rol-docente').textContent = rolMap[asunto.docente.rol.nombre.toLowerCase()] || asunto.docente.rol.nombre;
+    asuntoDiv.querySelector('.antiguedad-docente').textContent = new Date(Date.now() - new Date(asunto.docente.fechaAntiguedad).getTime()).getFullYear() - 1970 + ' Años';
+    asuntoDiv.querySelector('.posicion-docente').textContent = asunto.docente.posicion;
+
+    if (asunto.estado.toLowerCase() != 'pendiente') {
+        asuntoDiv.querySelector('.asunto-btns').classList.add('hidden');
+        asuntoDiv.querySelector('.asunto-btns').classList.remove('flex');
+    }
+}
+
+async function cargarAsuntos() {
+    const asuntosBody = document.getElementById('asuntos-body');
+    const sinAsuntos = document.getElementById('sin-asuntos');
+    asuntosBody.innerHTML = '';
+    sinAsuntos.classList.add('hidden');
+    sinAsuntos.classList.remove('flex');
+    const response = await fetch(`/api/dias`);
+    const data = await response.json();
+    if (!data || data.length === 0) {
+        sinAsuntos.classList.remove('hidden');
+        sinAsuntos.classList.add('flex');
+        return;
+    }
+
+    const asuntosSorted = data.sort((a, b) =>
+        (
+            a.estado.toLowerCase() == 'pendiente' ? -1 : 1 -
+                b.estado.toLowerCase() == 'pendiente' ? -1 : 1
+        ) ||
+        (a.docente.rol.prioridad - b.docente.rol.prioridad) ||
+        (a.docente.fechaAntiguedad.localeCompare(b.docente.fechaAntiguedad)) ||
+        (a.docente.posicion - b.docente.posicion)
+    );
+
+    const divsListos = await Promise.all(asuntosSorted.map((asunto, index) => createAsunto(asunto, index)));
+    divsListos.forEach(div => {
+        asuntosBody.appendChild(div);
+    })
+}
+
+async function createAsunto(asunto, p) {
+    const asuntosBody = document.getElementById('asuntos-body');
+    const asuntoDiv = document.getElementById('template-asunto').content.cloneNode(true).firstElementChild;
+    asuntoDiv.dataset.value = asunto.id;
+    const fecha = asuntoDiv.querySelector('.fecha-asunto');
+    asuntoDiv.querySelector('.trimestre-asunto').textContent = (await fetch(`/api/config/trimestre-index/${asunto.diaSolicitado}`).then(res => res.json()) + 1) + 'º Trimestre';
+    asuntoDiv.querySelector('.num-prioridad').textContent = p + 1;
+    asuntoDiv.querySelector('.nombre-docente').textContent = asunto.docente.nombre + ' ' + asunto.docente.apellidos;
+    asuntoDiv.querySelector('.nombre-docente').dataset.value = asunto.docente.id;
+    fecha.textContent = asunto.diaSolicitado;
+    fecha.dataset.value = asunto.diaSolicitado;
+
+    asuntoDiv.querySelector('.guardias-realizadas-asunto').textContent = await fetch(`/api/guardias/realizadas/${asunto.docente.id}`).then(res => res.json()).then(data => data.length);
+
+    pintarAsunto(asuntoDiv, asunto);
+
+    return asuntoDiv;
+}
+
+async function aprobarAsunto(asuntoDiv) {
+    const asuntoId = asuntoDiv.dataset.value;
+    const fecha = asuntoDiv.querySelector('.fecha-asunto').dataset.value;
+    const docenteId = asuntoDiv.querySelector('.nombre-docente').dataset.value;
+    try { 
+            const response = await fetch(`/api/guardias/generar-para-asunto/${asuntoId}`, {
+        method: 'POST',
+    })
+
+    if (!response.ok) {
+        const data = await response.json();
+        mostrarAlerta('Error al aprobar el asunto\n' + data.error);
+        return;
+    }
+
+    const response2 = await fetch(`/api/dias/validar/${fecha}/${docenteId}/aceptado`, {
+        method: 'PUT',
+    })
+
+    if (!response2.ok) {
+        const data = await response2.json();
+        mostrarAlerta('Error al aprobar el asunto\n' + data.error);
+        return;
+    }
+
+    mostrarAlerta('Asunto aprobado');
+    const asunto = await fetch(`/api/dias/id/${asuntoId}`).then(res => res.json());
+    await pintarAsunto(asuntoDiv, asunto);
+    } catch (error) {
+        console.error(error);
+        mostrarAlerta('Error inesperado\nConsulte la consola');
+    }
+}
+
+async function denegarAsunto(asuntoDiv) {
+    const asuntoId = asuntoDiv.dataset.value;
+    const fecha = asuntoDiv.querySelector('.fecha-asunto').dataset.value;
+    const docenteId = asuntoDiv.querySelector('.nombre-docente').dataset.value;
+    const response = await fetch(`/api/dias/validar/${fecha}/${docenteId}/denegado`, {
+        method: 'PUT',
+    }).catch((error) => {
+        mostrarAlerta(error.message);
+        return;
+    })
+
+    if (!response.ok) {
+        const data = await response.json();
+        mostrarAlerta('Error al denegar el asunto\n' + data.error);
+        return;
+    }
+
+    const asunto = await response.json();
+    await pintarAsunto(asuntoDiv, asunto);
 }

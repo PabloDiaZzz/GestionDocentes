@@ -2,6 +2,8 @@ package es.educastur.gjv64177.gestiondocentes.repository;
 
 import es.educastur.gjv64177.gestiondocentes.model.Docente;
 import es.educastur.gjv64177.gestiondocentes.model.Guardia;
+
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
@@ -15,5 +17,12 @@ public interface GuardiaRepository extends JpaRepository<Guardia, Long> {
 
 	List<Guardia> findByFecha(LocalDate fecha);
 
+	List<Guardia> findByDocenteAusenteId(Long docenteId);
+
 	List<Guardia> findByRealizada(boolean b);
+
+    @EntityGraph(attributePaths = {"docenteCubriendo", "docenteAusente"}) 
+    List<Guardia> findByFechaGreaterThanEqualOrderByFechaAscHorario_HoraAsc(LocalDate fechaInicio);
+
+	List<Guardia> findByDocenteCubriendoIdAndRealizada(Long docenteId, boolean b);
 }

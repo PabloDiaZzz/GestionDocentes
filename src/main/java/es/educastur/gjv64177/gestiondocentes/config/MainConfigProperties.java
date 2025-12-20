@@ -6,6 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 @PropertySource(value = "classpath:config.properties", encoding = "UTF-8")
 @ConfigurationProperties(prefix = "main")
 @Data
+@JsonIgnoreProperties({"$$beanFactory", "targetSource", "callbacks", "advisors", "h", "hibernateLazyInitializer"})
 public class MainConfigProperties {
 	public static Integer DIAS_TRIMESTRE;
 

@@ -29,7 +29,7 @@ public class Guardia {
 	@ManyToOne
 	@JoinColumn(name = "docente_cubriendo_id")
 	private Docente docenteCubriendo;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "horario_id")
 	private Horario horario;
 	private boolean realizada;
