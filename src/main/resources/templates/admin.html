@@ -10,7 +10,7 @@
 </head>
 
 <body
-    class="font-sans antialiased bg-gray-100 dark:bg-slate-900 m-0 flex flex-col justify-center items-center overflow-x-hidden">
+    class="font-sans antialiased bg-gray-100 dark:bg-slate-900 m-0 flex flex-col justify-center items-center overflow-x-hidden scrollbar-w-0 scrollbar max-w-full w-full scrollbar-none">
     <header class="bg-white dark:bg-slate-800 w-full py-4 shadow-md dark:shadow-lg">
         <div class="flex items-center justify-between gap-2 xl:max-w-327.5 max-w-250 w-full mx-auto px-3">
             <div class="flex flex-col gap-2">
@@ -27,7 +27,7 @@
             </a>
         </div>
     </header>
-    <main class="m-7 px-3 flex flex-col xl:flex-row gap-5 justify-center xl:max-w-full items-stretch">
+    <main class="m-7 px-3 flex flex-col xl:flex-row gap-5 justify-center xl:max-w-full items-stretch overflow-x-hidden scrollbar-none">
         <div class="flex flex-col gap-5 xl:w-75">
             <nav class="p-5 rounded-xl bg-white dark:bg-slate-800 flex flex-col gap-2 shadow-md">
                 <label class="nav-option group">
@@ -82,7 +82,7 @@
 
         </div>
         <div class="seccion-tab block text-black dark:text-white max-w-[95vw] w-250">
-            <section class="section-unit hidden flex-col gap-5" id="horario">
+            <section class="section-unit flex flex-col gap-5" id="horario">
                 <article class="p-5 flex flex-col gap-5 size-full bg-white dark:bg-slate-800 rounded-xl shadow-md">
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-2.5">
@@ -100,11 +100,13 @@
                         </button>
                     </div>
                     <div
-                        class="rounded-xl bg-blue-400/30 dark:bg-indigo-900/50 border dark:border-indigo-900 p-5 text-indigo-600 dark:text-indigo-400">
-                        Haga clic en cualquier celda para editar el horario. Los cambios se guardarán automáticamente.
+                        class="rounded-xl bg-blue-400/30 dark:bg-indigo-900/50 border dark:border-indigo-900 p-5 text-indigo-600 dark:text-indigo-400 **:[p]:m-0">
+                        <p>Haga clic en cualquier celda para editar el horario. Los cambios se guardarán automáticamente.</p>
+                        <br class="hidden max-sm:block">
+                        <p class="hidden max-sm:block">Utilice la primera fila para desplazarse sin problemas.</p>
                     </div>
-                    <div class="flex justify-between items-center my-3">
-                        <div class="flex gap-5">
+                    <div class="flex justify-between items-center my-3 max-sm:flex-col max-sm:gap-2">
+                        <div class="flex gap-5 max-sm:flex-col max-sm:gap-2">
                             <select
                                 class="cursor-pointer focus:rounded-b-none rounded-xl hover:bg-indigo-700 bg-indigo-600 text-white p-2 focus:outline-0"
                                 name="dept" id="selector-dept">
@@ -125,158 +127,160 @@
                             <span>Turno Mañana</span>
                         </button>
                     </div>
-                    <table id="horario-tabla-mañana"
-                        class="w-full text-left **:border **:border-gray-400 dark:**:border-slate-700 **:p-3 **:first:[td]:w-30 **:first:[td]:bg-black/5 dark:**:first:[td]:bg-white/5 **:[th]:bg-black/5 dark:**:[th]:bg-white/5 **:first:[td]:text-center **:[tr]:h-16 **:not-first:[td]:w-40">
-                        <thead>
-                            <tr class="text-center">
-                                <th>Hora</th>
-                                <th>Lunes</th>
-                                <th>Martes</th>
-                                <th>Miercoles</th>
-                                <th>Jueves</th>
-                                <th>Viernes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>8:30 - 9:25</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>9:25 - 10:20</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>10:20 - 11:15</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr class="h-min! *:cursor-default!">
-                                <td>11:15 - 11:45</td>
-                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
-                                    RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
-                                    RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
-                                    RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
-                                    RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
-                                    RECREO</td>
-                            </tr>
-                            <tr>
-                                <td>11:45 - 12:40</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>12:40 - 13:35</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>13:35 - 14:30</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table id="horario-tabla-tarde"
-                        class="hidden w-full text-left **:border **:border-gray-400 dark:**:border-slate-700 **:p-3 **:first:[td]:w-30 **:first:[td]:bg-black/5 dark:**:first:[td]:bg-white/5 **:[th]:bg-black/5 dark:**:[th]:bg-white/5 **:first:[td]:text-center **:[tr]:h-16 **:not-first:[td]:w-40">
-                        <thead>
-                            <tr class="text-center">
-                                <th>Hora</th>
-                                <th>Lunes</th>
-                                <th>Martes</th>
-                                <th>Miercoles</th>
-                                <th>Jueves</th>
-                                <th>Viernes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>15:30 - 16:25</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>16:25 - 17:20</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>17:20 - 18:15</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr class="h-min! *:cursor-default!">
-                                <td>18:15 - 18:45</td>
-                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
-                                    RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
-                                    RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
-                                    RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
-                                    RECREO</td>
-                                <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
-                                    RECREO</td>
-                            </tr>
-                            <tr>
-                                <td>18:45 - 19:40</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>19:40 - 20:35</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>20:35 - 21:30</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="max-sm:overflow-x-auto max-sm:snap-x max-sm:snap-mandatory max-sm:scroll-pl-30 max-sm:scrollbar-none border border-gray-400 dark:border-slate-700 @container">
+                        <table id="horario-tabla-mañana"
+                            class="w-full text-left **:border **:border-gray-400 dark:**:border-slate-700 **:p-3 **:first:[td]:w-30 **:first:[td]:bg-black/5 dark:**:first:[td]:bg-slate-700 **:[th]:bg-black/5 dark:**:[th]:bg-slate-700 **:first:[td]:text-center **:[tr]:h-16 **:not-first:[td]:w-40 **:first:[td,th]:max-sm:sticky **:first:[td,th]:max-sm:left-0 **:first:[td,th]:max-sm:z-20 **:first:[td,th]:max-sm:w-30 **:first:[td,th]:max-sm:min-w-30 **:not-first:[td,th]:max-sm:snap-start **:not-first:[td,th]:max-sm:min-w-[calc(100cqw-7.5rem)] **:not-first:[td,th]:max-sm:w-[calc(100cqw-7.5rem)] **:first:[td,th]:max-sm:border-l-0! **:[tr,tbody,thead]:border-l-0! border-l-0!">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Hora</th>
+                                    <th>Lunes</th>
+                                    <th>Martes</th>
+                                    <th>Miercoles</th>
+                                    <th>Jueves</th>
+                                    <th>Viernes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>8:30 - 9:25</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>9:25 - 10:20</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>10:20 - 11:15</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr class="h-min! *:cursor-default!">
+                                    <td>11:15 - 11:45</td>
+                                    <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
+                                        RECREO</td>
+                                </tr>
+                                <tr>
+                                    <td>11:45 - 12:40</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>12:40 - 13:35</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>13:35 - 14:30</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table id="horario-tabla-tarde"
+                            class="hidden w-full text-left **:border **:border-gray-400 dark:**:border-slate-700 **:p-3 **:first:[td]:w-30 **:first:[td]:bg-black/5 dark:**:first:[td]:bg-slate-700 **:[th]:bg-black/5 dark:**:[th]:bg-slate-700 **:first:[td]:text-center **:[tr]:h-16 **:not-first:[td]:w-40 **:first:[td,th]:max-sm:sticky **:first:[td,th]:max-sm:left-0 **:first:[td,th]:max-sm:z-20 **:first:[td,th]:max-sm:w-30 **:first:[td,th]:max-sm:min-w-30 **:not-first:[td,th]:max-sm:snap-start **:not-first:[td,th]:max-sm:min-w-[calc(100vw-11rem)] **:not-first:[td,th]:max-sm:w-[calc(100vw-11rem)] **:first:[td,th]:max-sm:border-l-0! **:[tr,tbody,thead]:border-l-0! border-l-0!">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Hora</th>
+                                    <th>Lunes</th>
+                                    <th>Martes</th>
+                                    <th>Miercoles</th>
+                                    <th>Jueves</th>
+                                    <th>Viernes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>15:30 - 16:25</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>16:25 - 17:20</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>17:20 - 18:15</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr class="h-min! *:cursor-default!">
+                                    <td>18:15 - 18:45</td>
+                                    <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
+                                        RECREO</td>
+                                    <td class="text-center bg-yellow-100 dark:bg-gray-900 text-black dark:text-white">
+                                        RECREO</td>
+                                </tr>
+                                <tr>
+                                    <td>18:45 - 19:40</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>19:40 - 20:35</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>20:35 - 21:30</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </article>
             </section>
             <section class="section-unit hidden flex-col gap-5" id="ausencias">
@@ -297,7 +301,7 @@
                         </button>
                     </div>
                     <form enctype="multipart/form-data" id="form-ausencia"
-                        class="size-full bg-gray-100/50 dark:bg-slate-900/50 border border-gray-300/50 dark:border-gray-700/50 hidden flex-col gap-5 rounded-xl p-5">
+                        class="size-full bg-gray-100/50 dark:bg-slate-900/50 border border-gray-300/50 dark:border-gray-700/50 hidden flex-col gap-5 rounded-xl p-5 max-sm:**:[div]:flex-col">
                         <p>Registrar Nueva Ausencia</p>
                         <div class="flex justify-between gap-5">
                             <div class="flex flex-col gap-2 flex-1/2">
@@ -351,7 +355,7 @@
                         </div>
                     </form>
                     <div
-                        class="flex gap-2.5 bg-yellow-50 text-amber-900  rounded-xl p-4 font-[450] border border-yellow-200">
+                        class="flex gap-2.5 bg-yellow-50 text-amber-900 rounded-xl p-4 font-[450] border border-yellow-200">
                         <svg class="size-6 fill-yellow-600">
                             <use th:href="@{/assets/main.svg#info}"></use>
                         </svg>
@@ -415,7 +419,7 @@
                     </div>
                 </article>
             </section>
-            <section class="section-unit flex flex-col gap-5" id="asuntos">
+            <section class="section-unit hidden flex-col gap-5" id="asuntos">
                 <article class="p-5 flex flex-col gap-5 size-full bg-white dark:bg-slate-800 rounded-xl shadow-md">
                     <div class="flex justify-between items-center py-3">
                         <div class="flex items-center gap-2.5">
@@ -459,33 +463,41 @@
         </div>
     </main>
     <template id="template-guardia">
-        <div class="size-full border-2 border-gray-400/50 dark:border-gray-700/50 rounded-xl flex flex-col gap-2 p-6">
-            <div class="flex items-center gap-3 mb-3">
-                <span class="hora-guardia bg-indigo-100 text-indigo-800 px-4 py-2 rounded-lg"></span>
-                <span
-                    class="span-realizada bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1"><svg
-                        class="size-4 fill-green-800">
-                        <use th:href="@{/assets/main.svg#check}"></use>
-                    </svg>Realizada</span>
-                <span
-                    class="span-pendiente bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1"><svg
-                        class="size-4 fill-yellow-800">
-                        <use th:href="@{/assets/main.svg#pend}"></use>
-                    </svg>Pendiente</span>
-                <span class="fecha-guardia rounded-full p-1 bg-red-100 text-sm text-red-800 px-2.5 h-fit"></span>
-            </div>
-            <div class="flex *:flex-1/2">
-                <div class="flex flex-col gap-2">
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Profesor Ausente:</p>
-                    <p class="docente-ausente text-gray-900 dark:text-gray-100"></p>
+        <div
+            class="size-full border-2 border-gray-400/50 dark:border-gray-700/50 rounded-xl flex flex-col gap-2 p-3 sm:p-6">
+            <div
+                class="flex flex-col max-sm:xs:flex-row-reverse max-sm:xs:justify-between justify-normal gap-y-2 xs:gap-y-0 max-xs:items-center max-xs:w-full">
+                <div
+                    class="flex flex-col sm:flex-row gap-3 mb-3 items-end xs:items-center overflow-x-visible max-w-1/2 xs:max-w-full max-xs:grid max-xs:grid-cols-2 max-xs:grid-rows-2 max-xs:gap-y-1 max-xs:gap-x-auto max-xs:justify-between max-xs:items-center max-xs:max-w-full max-xs:*:m-auto">
+                    <span
+                        class="hora-guardia bg-indigo-100 text-indigo-800 px-4 py-2 rounded-lg whitespace-nowrap max-xs:col-start-1 max-xs:row-start-1 w-fit"></span>
+                    <span
+                        class="span-realizada bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1 max-xs:col-start-2 max-xs:row-start-1"><svg
+                            class="size-4 fill-green-800">
+                            <use th:href="@{/assets/main.svg#check}"></use>
+                        </svg>Realizada</span>
+                    <span
+                        class="span-pendiente bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1 max-xs:col-start-2 max-xs:row-start-1"><svg
+                            class="size-4 fill-yellow-800">
+                            <use th:href="@{/assets/main.svg#pend}"></use>
+                        </svg>Pendiente</span>
+                    <span
+                        class="fecha-guardia rounded-full p-1 bg-red-100 text-sm text-red-800 px-2.5 h-fit max-xs:col-start-1 max-xs:col-end-3 max-xs:row-start-2 max-sm:text-center"></span>
                 </div>
-                <div class="flex flex-col gap-2">
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Profesor Cubriendo:</p>
-                    <p class="docente-cubriendo text-gray-900 dark:text-gray-100"></p>
+                <div
+                    class="flex *:flex-1/2 flex-row max-sm:xs:flex-col max-sm:xs:items-start items-center gap-0 h-fit xs:h-auto max-xs:items-start max-xs:justify-between">
+                    <div class="flex flex-col gap-0.5 xs:gap-0.5 xs:**:whitespace-nowrap **:w-fit">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Profesor Ausente:</p>
+                        <p class="docente-ausente text-gray-900 dark:text-gray-100"></p>
+                    </div>
+                    <div class="flex flex-col gap-0.5 xs:gap-2 xs:**:whitespace-nowrap **:w-fit">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Profesor Cubriendo:</p>
+                        <p class="docente-cubriendo text-gray-900 dark:text-gray-100"></p>
+                    </div>
                 </div>
             </div>
             <div
-                class="size-full p-3 bg-blue-50 dark:bg-gray-800 border border-blue-200 dark:border-gray-700 rounded-xl flex items-center gap-3 mt-3 text-blue-800 dark:text-violet-300">
+                class="size-full p-3 bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-gray-700 rounded-xl flex items-center gap-3 mt-3 text-blue-800 dark:text-violet-300">
                 <svg class="size-6 fill-blue-800 dark:fill-violet-300">
                     <use th:href="@{/assets/main.svg#paper}"></use>
                 </svg>
@@ -493,7 +505,7 @@
             </div>
             <hr class="my-3 border-gray-400/50 dark:border-gray-700/50">
             <button
-                class="hidden justify-center items-center flex-1 px-4 py-2 rounded-lg guardia-boton-realizada transition-colors bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-200 dark:hover:bg-green-300 cursor-pointer">Marcar
+                class="hidden guardia-boton-realizada justify-center items-center flex-1 px-4 py-2 rounded-lg transition-colors bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-200 dark:hover:bg-green-300 cursor-pointer">Marcar
                 como Realizada</button>
             <button
                 class="guardia-boton-pendiente hidden justify-center items-center flex-1 px-4 py-2 rounded-lg transition-colors bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-200 dark:hover:bg-yellow-300 cursor-pointer">Marcar
@@ -506,7 +518,7 @@
         </svg>
     </template>
     <dialog
-        class="left-1/2 top-1/2 p-5 hidden open:flex flex-col gap-5 text-white bg-white dark:bg-slate-800 rounded-xl shadow-md"
+        class="left-1/2 top-1/2 p-5 hidden open:flex flex-col gap-5 text-white bg-white dark:bg-slate-800 rounded-xl shadow-md max-sm:-translate-x-1/2 max-sm:-translate-y-1/2 max-sm:max-w-full"
         id="dialog-edit-horario">
         <form class="flex flex-col gap-1 caret-indigo-600" id="form-edit-horario">
             <input type="hidden" id="hidden-docente-id" name="docenteId">
@@ -566,7 +578,7 @@
     </dialog>
     <template id="template-alerta">
         <div
-            class="cursor-crosshair z-50 bg-indigo-100/10 dark:bg-slate-700/10 backdrop-blur-sm border-none outline-none dark:text-white rounded-xl shadow-lg p-3 max-w-100 animate-fade-in-left overflow-hidden">
+            class="alerta cursor-crosshair z-50 bg-indigo-100/10 dark:bg-slate-700/10 backdrop-blur-sm border-none outline-none dark:text-white rounded-xl shadow-lg p-3 max-w-100 animate-fade-in-left overflow-hidden">
             <p class="whitespace-pre-line" id="alerta-texto"></p>
             <div id="alerta-slide"
                 class="bg-indigo-600 dark:bg-white h-0.5 w-full animate-[deslizar-izquierda-dentro_4s_linear] transition-transform absolute bottom-0 left-0">
@@ -578,14 +590,14 @@
     </div>
     <template id="template-ausencia">
         <div
-            class="w-full border border-gray-200 dark:border-slate-700 rounded-xl p-3.5 hover:shadow-md dark:hover:shadow-xl shadow-none transition flex flex-col gap-2">
-            <div class="flex justify-between -mb-1.5">
-                <div class="flex gap-2">
+            class="ausencia w-full border border-gray-200 dark:border-slate-700 rounded-xl p-2 sm:p-3.5 hover:shadow-md dark:hover:shadow-xl shadow-none transition flex flex-col gap-2">
+            <div class="flex justify-between sm:-mb-1.5 ">
+                <div class="flex gap-2 flex-col sm:flex-row">
                     <span class="fecha-ausencia rounded-full p-1 bg-red-100 text-sm text-red-800 px-2.5 h-fit"></span>
-                    <span class="hora-ausencia rounded-xl p-1 bg-blue-100 text-sm text-blue-800 px-2 h-fit"></span>
+                    <span
+                        class="hora-ausencia rounded-xl p-1 bg-blue-100 text-sm text-blue-800 px-2.5 h-min w-fit"></span>
                 </div>
-                <button onclick="borrarAusencia(this.parentNode.parentNode)"
-                    class="cursor-pointer hover:bg-red-400/40 rounded-xl transition p-1.5">
+                <button class="borrar-ausencia cursor-pointer hover:bg-red-400/40 rounded-xl transition p-1.5">
                     <svg class="size-6 fill-red-500">
                         <use th:href="@{/assets/main.svg#trash}"></use>
                     </svg>
@@ -596,34 +608,35 @@
         </div>
     </template>
     <template id="template-asunto">
-        <div class="border-2 border-gray-200 dark:border-gray-700 flex flex-col gap-3 items-start rounded-xl p-4">
+        <div
+            class="asunto border-2 border-gray-200 dark:border-gray-700 flex flex-col gap-3 items-start rounded-xl p-4">
             <span class="text-prioridad text-sm text-indigo-800 bg-indigo-50 px-3 py-1 rounded-lg">Prioridad #<span
                     class="num-prioridad">0</span></span>
             <div class="flex gap-3">
                 <p class="nombre-docente">María García López</p>
                 <span
-                    class="span-aprobado bg-green-100 text-green-800 px-3 py-1  rounded-full text-sm hidden items-center gap-1"><svg
+                    class="span-aprobado bg-green-100 text-green-800 px-3 py-1  rounded-full text-sm hidden items-center gap-1 h-fit"><svg
                         class="size-4 fill-green-800">
                         <use th:href="@{/assets/main.svg#check}"></use>
                     </svg>Aprobado</span>
                 <span
-                    class="span-pendiente bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1"><svg
+                    class="span-pendiente bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1 h-fit"><svg
                         class="size-4 fill-yellow-800">
                         <use th:href="@{/assets/main.svg#pend}"></use>
                     </svg>Pendiente</span>
                 <span
-                    class="span-rechazado bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1"><svg
+                    class="span-rechazado bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1 h-fit"><svg
                         class="size-4 fill-red-800">
                         <use th:href="@{/assets/main.svg#cross}"></use>
                     </svg>Rechazado</span>
             </div>
             <div
-                class="flex justify-beetween gap-3 *:flex-1 w-full *:bg-gray-50 *:px-3 *:py-2 *:rounded-md *:text-sm *:text-gray-600 dark:*:text-gray-400 dark:*:bg-slate-900">
+                class="flex justify-beetween sm:flex-row flex-col gap-3 *:flex-1 w-full *:bg-gray-50 *:px-3 *:py-2 *:rounded-md *:text-sm *:text-gray-600 dark:*:text-gray-400 dark:*:bg-slate-900">
                 <p>Tipo: <span class="rol-docente text-gray-900 dark:text-gray-100"></span></p>
                 <p>Antigüedad: <span class="antiguedad-docente text-black dark:text-gray-100"></span></p>
                 <p>Posición: <span class="posicion-docente text-black dark:text-gray-100"></span></p>
             </div>
-            <div class="flex gap-3 w-full *:flex-1 mx-1">
+            <div class="flex gap-3 w-full *:flex-1 mx-1 sm:items-center items-end">
                 <div>
                     <p class="text-sm text-gray-600 dark:text-gray-400">Fecha Solicitada:</p>
                     <p class="fecha-asunto text-gray-900 dark:text-gray-100">15/12/2025</p>
@@ -644,19 +657,36 @@
                 </svg>
                 <span class="text-green-800 dark:text-green-200">Materiales subidos</span>
             </div>
+            <div
+                class="anotacion-asunto w-full rounded-xl p-3 bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 hidden flex-col gap-2">
+                <div class="titulo-anotacion-asunto flex gap-2 items-center">
+                    <svg class="size-3 fill-gray-600 dark:fill-gray-200">
+                        <use th:href="@{/assets/main.svg#edit}"></use>
+                    </svg>
+                    <span class="text-gray-800 dark:text-gray-200 text-sm">Anotación:</span>
+                </div>
+                <input name="anotacion" autocomplete="off" type="text"
+                    class="anotacion-asunto-text text-gray-600 dark:text-gray-400 w-full focus:outline-none enabled:text-black dark:enabled:text-white"
+                    placeholder="No hay anotación">
+            </div>
             <hr class="my-3 border-gray-200 dark:border-gray-600 w-full">
-            <div class="asunto-btns flex gap-2 w-full">
+            <div class="asunto-btns flex gap-2 w-full sm:flex-row flex-col">
                 <button
-                    class="btn-aceptar flex-1/2 border bg-green-600 hover:bg-green-700 px-3 py-2 rounded-xl border-none text-white flex gap-2 justify-center items-center cursor-pointer"
-                    onclick="aprobarAsunto(this.parentNode.parentNode)">
+                    class="btn-aceptar flex-1/2 border bg-green-600 hover:bg-green-700 px-3 py-2 rounded-xl border-none text-white flex gap-2 justify-center items-center cursor-pointer">
                     <svg class="size-5.5 fill-white">
                         <use th:href="@{/assets/main.svg#check}"></use>
                     </svg>
                     <span>Aprobar y enviar email</span>
                 </button>
                 <button
-                    class="btn-rechazar flex-1/2 border bg-red-600 px-3 py-2 rounded-xl border-none text-white flex gap-2 justify-center items-center cursor-pointer hover:bg-red-700"
-                    onclick="denegarAsunto(this.parentNode.parentNode)">
+                    class="btn-notas flex-1/3 border bg-blue-100 px-3 py-2 rounded-xl border-none text-blue-700 flex gap-2 justify-center items-center cursor-pointer hover:bg-blue-200">
+                    <svg class="size-5.5 fill-blue-700">
+                        <use th:href="@{/assets/main.svg#edit}"></use>
+                    </svg>
+                    <span>Añadir anotación</span>
+                </button>
+                <button
+                    class="btn-rechazar flex-1/2 border bg-red-600 px-3 py-2 rounded-xl border-none text-white flex gap-2 justify-center items-center cursor-pointer hover:bg-red-700">
                     <svg class="size-5.5 fill-white">
                         <use th:href="@{/assets/main.svg#cross}"></use>
                     </svg>

@@ -43,7 +43,7 @@ public class GuardiaService {
 	private MainConfigProperties config;
 
 	@Transactional
-	public Docente buscarSustituto(Horario horario) {
+	public Docente buscarSustituto(Horario horario, LocalDate fecha) {
 		if (horario.getDocente() == null) { // Por si el horario está corrupto y no tiene docente asignado
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se ha encontrado docente para el dia "
 					+ horario.getDia() + " y la hora " + horario.getHora() + " el horario puede estar corrupto");
@@ -57,6 +57,11 @@ public class GuardiaService {
 		candidatos.removeAll(horarioRepository.findByDiaAndHora(horario.getDia(), horario.getHora())
 				.stream()
 				.map(Horario::getDocente)
+				.toList());
+		// Borramos los que estan cubriendo una guardia en la misma hora
+		candidatos.removeAll(guardiaRepository.findByFechaAndHorarioHora(fecha, horario.getHora())
+				.stream()
+				.map(Guardia::getDocenteCubriendo)
 				.toList());
 
 		// Primero buscamos si hay alguien del mismo departamento

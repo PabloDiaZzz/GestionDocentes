@@ -135,6 +135,8 @@ function limpiarTablasHorario() {
             const celdas = fila.querySelectorAll('td');
             for (let i = 1; i < celdas.length; i++) {
                 celdas[i].innerHTML = '';
+                var clone = celdas[i].cloneNode(true);
+                celdas[i].parentNode.replaceChild(clone, celdas[i]);
             }
         }
         contador++;
@@ -145,6 +147,8 @@ function limpiarTablasHorario() {
             const celdas = fila.querySelectorAll('td');
             for (let i = 1; i < celdas.length; i++) {
                 celdas[i].innerHTML = '';
+                var clone = celdas[i].cloneNode(true);
+                celdas[i].parentNode.replaceChild(clone, celdas[i]);
             }
         }
         contador++;
@@ -259,31 +263,23 @@ async function cargarHorarioDocente(docenteId) {
         const filas = Array.from(document.querySelectorAll('#horario-tabla-mañana tbody tr'))
             .concat(Array.from(document.querySelectorAll('#horario-tabla-tarde tbody tr')));
 
-        // Eliminamos las filas de recreo según tu lógica (índices 10 y 3)
-        // Nota: Es importante hacerlo en orden inverso o con cuidado si los índices cambian al borrar
-        // Asumo que tu lógica original funcionaba para tu HTML específico.
         filas.splice(10, 1);
         filas.splice(3, 1);
 
-        // 3. Recorremos TODAS las celdas para ponerles el listener de editar (incluso las vacías)
+
         filas.forEach((fila, indexHora) => {
             const horaReal = indexHora + 1;
             const celdas = fila.querySelectorAll('td');
 
-            // Empezamos en i=1 porque la 0 es la columna de la hora
             for (let i = 1; i < celdas.length; i++) {
                 const diaReal = i;
                 const celda = celdas[i];
 
-                // Buscamos si hay clase en este hueco
                 const horario = datosOrdenados.find(h => h.dia == diaReal && h.hora == horaReal);
 
-                // Configuración básica de la celda
                 celda.classList.add('relative', 'group');
 
-                // Si hay horario, pintamos el contenido
                 if (horario) {
-                    // Usamos ?. para evitar errores si asignatura es null
                     const nombreAsig = horario.asignatura?.nombre || '---';
                     const aula = horario.aula || '';
                     const cursoCiclo = horario.asignatura?.ciclo?.codigo
@@ -312,6 +308,9 @@ async function cargarHorarioDocente(docenteId) {
                 );
 
                 img.addEventListener('click', () => {
+                    editarHorario(docenteId, horaReal, diaReal);
+                });
+                celda.addEventListener('touchstart', () => {
                     editarHorario(docenteId, horaReal, diaReal);
                 });
                 if (docenteId != null && docenteId != '') {
@@ -443,7 +442,6 @@ function printHorarios() {
     table1.classList.remove('hidden');
     table2.classList.remove('hidden');
 
-    // Función auxiliar para envolver
     function createPageWrapper(table, isFirst) {
         const wrapper = document.createElement('div');
         wrapper.className = 'print-page-wrapper';
@@ -537,6 +535,9 @@ async function cargarAusencias() {
                 obsAusencia.textContent = ausencia.anotacion;
                 ausenciaDiv.id = '';
                 ausencias.appendChild(ausenciaDiv);
+                ausenciaDiv.querySelector('.borrar-ausencia').addEventListener('click', () => {
+                    borrarAusencia(ausenciaDiv);
+                });
             });
             if (data.length == 0) {
                 document.getElementById('sin-ausencias').classList.remove('hidden');
@@ -648,6 +649,7 @@ async function procesarGuardarAusencia(e) {
     } catch (error) {
         mostrarAlerta(error.message);
     }
+    cargarAusencias();
 }
 
 async function borrarAusencia(el) {
@@ -667,6 +669,7 @@ async function borrarAusencia(el) {
             .catch(error => mostrarAlerta(error.message));
     })
         .catch(error => mostrarAlerta(error.message));
+    cargarGuardias();
 }
 
 function setupGuardias() {
@@ -703,12 +706,13 @@ async function createGuardia(guardia) {
             material.appendChild(link);
         }
         pintarGuardia(guardiaDiv, guardia);
-        guardiaDiv.querySelector('.guardia-boton-realizada').addEventListener('click', () => {
-            alternarGuardia(guardiaDiv)
+
+        guardiaDiv.addEventListener('click', (e) => {
+            if (e.target.classList.contains('guardia-boton-realizada') || e.target.classList.contains('guardia-boton-pendiente')) {
+                alternarGuardia(guardiaDiv)
+            }
         })
-        guardiaDiv.querySelector('.guardia-boton-pendiente').addEventListener('click', () => {
-            alternarGuardia(guardiaDiv)
-        })
+
         return guardiaDiv;
     } catch (error) {
         mostrarAlerta(`Error al cargar la guardia id + ${guardia.id}\n${error.message}`);
@@ -795,16 +799,34 @@ async function pintarAsunto(asuntoDiv, asunto) {
     const spanPendiente = asuntoDiv.querySelector('.span-pendiente');
     const spanAprobado = asuntoDiv.querySelector('.span-aprobado');
     const spanRechazado = asuntoDiv.querySelector('.span-rechazado');
+    spanPendiente.classList.add('hidden');
+    spanPendiente.classList.remove('flex');
+    spanAprobado.classList.add('hidden');
+    spanAprobado.classList.remove('flex');
+    spanRechazado.classList.add('hidden');
+    spanRechazado.classList.remove('flex');
+    asuntoDiv.querySelector('.asunto-btns').classList.add('hidden');
+    asuntoDiv.querySelector('.asunto-btns').classList.remove('flex');
+    asuntoDiv.querySelector('.mail-aprobado').classList.add('hidden');
+    asuntoDiv.querySelector('.mail-aprobado').classList.remove('flex');
+    asuntoDiv.querySelector('.mail-denegado').classList.add('hidden');
+    asuntoDiv.querySelector('.mail-denegado').classList.remove('flex');
+    asuntoDiv.querySelector('.anotacion-asunto').classList.add('hidden');
+    asuntoDiv.querySelector('.anotacion-asunto').classList.remove('flex');
     switch (asunto.estado.toLowerCase()) {
         case 'pendiente':
             spanPendiente.classList.remove('hidden');
             spanPendiente.classList.add('flex');
+            asuntoDiv.querySelector('.asunto-btns').classList.remove('hidden');
+            asuntoDiv.querySelector('.asunto-btns').classList.add('flex');
+            if (asuntoDiv.querySelector('.anotacion-asunto').value != null && asuntoDiv.querySelector('.anotacion-asunto').value != '') {
+                asuntoDiv.querySelector('.anotacion-asunto').classList.remove('hidden');
+                asuntoDiv.querySelector('.anotacion-asunto').classList.add('flex');
+            }
             break;
         case 'aceptado':
             spanAprobado.classList.remove('hidden');
             spanAprobado.classList.add('flex');
-            asuntoDiv.querySelector('.asunto-btns').classList.add('hidden');
-            asuntoDiv.querySelector('.asunto-btns').classList.remove('flex');
             asuntoDiv.querySelector('.mail-aprobado').classList.remove('hidden');
             asuntoDiv.querySelector('.mail-aprobado').classList.add('flex');
             await fetch(`/api/guardias/docente-ausente/${asunto.docente.id}`).then(res => res.json()).then(data => {
@@ -819,8 +841,6 @@ async function pintarAsunto(asuntoDiv, asunto) {
         case 'denegado':
             spanRechazado.classList.remove('hidden');
             spanRechazado.classList.add('flex');
-            asuntoDiv.querySelector('.asunto-btns').classList.add('hidden');
-            asuntoDiv.querySelector('.asunto-btns').classList.remove('flex');
             asuntoDiv.querySelector('.mail-denegado').classList.remove('hidden');
             asuntoDiv.querySelector('.mail-denegado').classList.add('flex');
             asuntoDiv.querySelector('.text-prioridad').firstChild.nodeValue = 'Sin Prioridad';
@@ -836,11 +856,18 @@ async function pintarAsunto(asuntoDiv, asunto) {
     asuntoDiv.querySelector('.rol-docente').textContent = rolMap[asunto.docente.rol.nombre.toLowerCase()] || asunto.docente.rol.nombre;
     asuntoDiv.querySelector('.antiguedad-docente').textContent = new Date(Date.now() - new Date(asunto.docente.fechaAntiguedad).getTime()).getFullYear() - 1970 + ' Años';
     asuntoDiv.querySelector('.posicion-docente').textContent = asunto.docente.posicion;
+    asuntoDiv.querySelector('.anotacion-asunto-text').value = await fetch(`/api/dias/id/${asunto.id}`).then(res => res.json()).then(data => data.observaciones);
 
     if (asunto.estado.toLowerCase() != 'pendiente') {
         asuntoDiv.querySelector('.asunto-btns').classList.add('hidden');
         asuntoDiv.querySelector('.asunto-btns').classList.remove('flex');
     }
+
+    if (asuntoDiv.querySelector('.anotacion-asunto-text').value.length != 0) {
+        asuntoDiv.querySelector('.anotacion-asunto').classList.remove('hidden');
+        asuntoDiv.querySelector('.anotacion-asunto').classList.add('flex');
+    }
+    asuntoDiv.querySelector('.anotacion-asunto-text').disabled = true;
 }
 
 async function cargarAsuntos() {
@@ -887,6 +914,21 @@ async function createAsunto(asunto, p) {
 
     asuntoDiv.querySelector('.guardias-realizadas-asunto').textContent = await fetch(`/api/guardias/realizadas/${asunto.docente.id}`).then(res => res.json()).then(data => data.length);
 
+    asuntoDiv.querySelector('.asunto-btns').addEventListener('click', (e) => {
+        if (e.target.closest('.btn-aceptar')) {
+            aprobarAsunto(asuntoDiv);
+            return;
+        }
+        if (e.target.closest('.btn-rechazar')) {
+            denegarAsunto(asuntoDiv);
+            return;
+        }
+        if (e.target.closest('.btn-notas')) {
+            anotacionAsunto(asuntoDiv);
+            return;
+        }
+    })
+
     pintarAsunto(asuntoDiv, asunto);
 
     return asuntoDiv;
@@ -896,30 +938,30 @@ async function aprobarAsunto(asuntoDiv) {
     const asuntoId = asuntoDiv.dataset.value;
     const fecha = asuntoDiv.querySelector('.fecha-asunto').dataset.value;
     const docenteId = asuntoDiv.querySelector('.nombre-docente').dataset.value;
-    try { 
-            const response = await fetch(`/api/guardias/generar-para-asunto/${asuntoId}`, {
-        method: 'POST',
-    })
+    try {
+        const response = await fetch(`/api/guardias/generar-para-asunto/${asuntoId}`, {
+            method: 'POST',
+        })
 
-    if (!response.ok) {
-        const data = await response.json();
-        mostrarAlerta('Error al aprobar el asunto\n' + data.error);
-        return;
-    }
+        if (!response.ok) {
+            const data = await response.json();
+            mostrarAlerta('Error al aprobar el asunto\n' + data.error);
+            return;
+        }
 
-    const response2 = await fetch(`/api/dias/validar/${fecha}/${docenteId}/aceptado`, {
-        method: 'PUT',
-    })
+        const response2 = await fetch(`/api/dias/validar/${fecha}/${docenteId}/aceptado`, {
+            method: 'PUT',
+        })
 
-    if (!response2.ok) {
-        const data = await response2.json();
-        mostrarAlerta('Error al aprobar el asunto\n' + data.error);
-        return;
-    }
+        if (!response2.ok) {
+            const data = await response2.json();
+            mostrarAlerta('Error al aprobar el asunto\n' + data.error);
+            return;
+        }
 
-    mostrarAlerta('Asunto aprobado');
-    const asunto = await fetch(`/api/dias/id/${asuntoId}`).then(res => res.json());
-    await pintarAsunto(asuntoDiv, asunto);
+        mostrarAlerta('Asunto aprobado');
+        const asunto = await fetch(`/api/dias/id/${asuntoId}`).then(res => res.json());
+        await pintarAsunto(asuntoDiv, asunto);
     } catch (error) {
         console.error(error);
         mostrarAlerta('Error inesperado\nConsulte la consola');
@@ -943,6 +985,46 @@ async function denegarAsunto(asuntoDiv) {
         return;
     }
 
-    const asunto = await response.json();
+    const asunto = await fetch(`/api/dias/id/${asuntoId}`).then(res => res.json());
     await pintarAsunto(asuntoDiv, asunto);
+}
+
+function anotacionAsunto(asuntoDiv) {
+    asuntoDiv.querySelector('.anotacion-asunto').classList.remove('hidden');
+    asuntoDiv.querySelector('.anotacion-asunto').classList.add('flex');
+    asuntoDiv.querySelector('.btn-notas').querySelector('span').textContent = 'Guardar Anotación';
+    asuntoDiv.querySelector('.anotacion-asunto-text').disabled = false;
+
+    const funcEditar = async (e) => {
+        e.stopPropagation();
+        const nota = asuntoDiv.querySelector('.anotacion-asunto-text').value;
+        const asunto = await fetch(`/api/dias/id/${asuntoDiv.dataset.value}`).then(res => res.json());
+        asunto.observaciones = nota;
+        const response = await fetch(`/api/dias/${asunto.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(asunto),
+        }).catch((error) => {
+            mostrarAlerta(error.message);
+            return;
+        })
+
+        if (!response.ok) {
+            const data = response.json();
+            mostrarAlerta('Error al anotar el asunto\n' + data.error);
+            return;
+        }
+
+        mostrarAlerta('Anotación guardada');
+        if (nota.length == 0) {
+            asuntoDiv.querySelector('.anotacion-asunto').classList.add('hidden');
+            asuntoDiv.querySelector('.anotacion-asunto').classList.remove('flex');
+        }
+        asuntoDiv.querySelector('.anotacion-asunto-text').disabled = true;
+        asuntoDiv.querySelector('.btn-notas').querySelector('span').textContent = 'Añadir anotación';
+    }
+
+    asuntoDiv.querySelector('.btn-notas').addEventListener('click', funcEditar, { once: true });
 }

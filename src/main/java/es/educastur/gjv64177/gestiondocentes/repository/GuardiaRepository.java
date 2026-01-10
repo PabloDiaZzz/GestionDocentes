@@ -17,6 +17,8 @@ public interface GuardiaRepository extends JpaRepository<Guardia, Long> {
 
 	List<Guardia> findByFecha(LocalDate fecha);
 
+	List<Guardia> findByFechaAndHorarioHora(LocalDate fecha, Integer hora);
+
 	List<Guardia> findByDocenteAusenteId(Long docenteId);
 
 	List<Guardia> findByRealizada(boolean b);

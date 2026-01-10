@@ -1,9 +1,15 @@
 @import "tailwindcss";
 @plugin '@midudev/tailwind-animations';
+@plugin 'tailwind-scrollbar';
 @source "./src/main/resources/templates";
 @source "./src/main/resources/static/js";
 
+@plugin 'tailwind-scrollbar' {
+    nocompatible: true;
+}
+
 @theme {
+    --breakpoint-xs: 23.75rem;
     --color-back: oklch(0.1448 0 0)
     --animate-deslizar-izquierda-dentro: deslizar-izquierda-dentro 1s ease-in-out infinite;
     @keyframes deslizar-izquierda-dentro {
