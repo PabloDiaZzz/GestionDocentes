@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch:css": "tailwindcss -i ./input.css -o ./src/main/resources/static/css/tailwind.css --watch",
+    "watch:css": "npx @tailwindcss/cli -i ./input.css -o ./src/main/resources/static/css/tailwind.css --watch",
     "watch:boot": "mvnw spring-boot:run -Dspring-boot.run.jvmArguments='-Dserver.port=8080'",
     "watch:sync": "wait-on tcp:8080 && browser-sync start --config bs-config.js",
     "dev": "concurrently --kill-others \"npm run watch:css\" \"npm run watch:boot\" \"npm run watch:sync\""
@@ -12,14 +12,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.26.0",
+  "packageManager": "pnpm@10.28.0",
   "devDependencies": {
     "browser-sync": "^3.0.4",
     "concurrently": "^9.2.1",
-    "tailwind-scrollbar": "^4.0.2",
+    "tailwindcss": "^4.1.18",
     "wait-on": "^9.0.3"
   },
   "dependencies": {
-    "@midudev/tailwind-animations": "^0.2.0"
+    "@midudev/tailwind-animations": "^0.2.0",
+    "@tailwindcss/cli": "^4.1.18"
   }
 }

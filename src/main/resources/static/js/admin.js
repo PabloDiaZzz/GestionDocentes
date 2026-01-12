@@ -721,6 +721,7 @@ async function createGuardia(guardia) {
 
 async function cargarGuardias() {
     const fecha = document.getElementById('selector-fecha-guardia').value;
+    console.log(fecha)
     const guardiasBody = document.getElementById('guardias-body');
     guardiasBody.innerHTML = ''
     if (fecha == '') {
@@ -738,8 +739,9 @@ async function cargarGuardias() {
         })
     } else {
         fetch(`/api/guardias/fecha/${fecha}`).then(res => res.json()).then(data => {
-            Array.from(data).sort((a, b) => a.fecha.localeCompare(b.fecha) || a.horario.hora - b.horario.hora).forEach(guardia => {
-                createGuardia(guardia);
+            const guardias = Array.from(data).sort((a, b) => a.fecha.localeCompare(b.fecha) || a.horario.hora - b.horario.hora)
+            Promise.all(guardias.map(guardia => createGuardia(guardia))).then(guardias => {
+                guardias.forEach(g => guardiasBody.appendChild(g))
             })
             document.getElementById('sin-guardias').classList.add('hidden')
             document.getElementById('sin-guardias').classList.remove('flex')

@@ -138,7 +138,7 @@ public class GuardiaController {
 			nuevaGuardia.setRealizada(false);
 
 			try {
-				Docente sustituto = guardiaService.buscarSustituto(horarioAusente, fecha);
+				Docente sustituto = guardiaService.buscarSustituto(horarioAusente);
 
 				nuevaGuardia.setDocenteCubriendo(sustituto);
 
