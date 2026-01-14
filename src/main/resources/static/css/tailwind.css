@@ -294,6 +294,9 @@
   }
   .container {
     width: 100%;
+    @media (width >= 23.75rem) {
+      max-width: 23.75rem;
+    }
     @media (width >= 40rem) {
       max-width: 40rem;
     }
@@ -360,6 +363,60 @@
   }
   .ml-1 {
     margin-left: calc(var(--spacing) * 1);
+  }
+  .scrollbar {
+    &::-webkit-scrollbar-track {
+      background-color: var(--scrollbar-track);
+      border-radius: var(--scrollbar-track-radius);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--scrollbar-thumb);
+      border-radius: var(--scrollbar-thumb-radius);
+    }
+    &::-webkit-scrollbar-corner {
+      background-color: var(--scrollbar-corner);
+      border-radius: var(--scrollbar-corner-radius);
+    }
+    scrollbar-width: auto;
+    scrollbar-color: var(--scrollbar-thumb, initial) var(--scrollbar-track, initial);
+    &::-webkit-scrollbar {
+      display: block;
+      width: var(--scrollbar-width, 16px);
+      height: var(--scrollbar-height, 16px);
+    }
+  }
+  .scrollbar {
+    &::-webkit-scrollbar-track {
+      background-color: var(--scrollbar-track);
+      border-radius: var(--scrollbar-track-radius);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--scrollbar-thumb);
+      border-radius: var(--scrollbar-thumb-radius);
+    }
+    &::-webkit-scrollbar-corner {
+      background-color: var(--scrollbar-corner);
+      border-radius: var(--scrollbar-corner-radius);
+    }
+    scrollbar-width: auto;
+    scrollbar-color: var(--scrollbar-thumb, initial) var(--scrollbar-track, initial);
+    &::-webkit-scrollbar {
+      display: block;
+      width: var(--scrollbar-width, 16px);
+      height: var(--scrollbar-height, 16px);
+    }
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   .block {
     display: block;
@@ -441,6 +498,9 @@
   }
   .w-250 {
     width: calc(var(--spacing) * 250);
+  }
+  .w-\[85\%\] {
+    width: 85%;
   }
   .w-\[min\(450px\,90vw\)\] {
     width: min(450px, 90vw);
@@ -1051,6 +1111,29 @@
     --tw-outline-style: none;
     outline-style: none;
   }
+  .scrollbar-w-0 {
+    --scrollbar-width: 0px;
+  }
+  .\*\:mx-1 {
+    :is(& > *) {
+      margin-inline: calc(var(--spacing) * 1);
+    }
+  }
+  .\*\:block {
+    :is(& > *) {
+      display: block;
+    }
+  }
+  .\*\:w-full {
+    :is(& > *) {
+      width: 100%;
+    }
+  }
+  .\*\:min-w-0 {
+    :is(& > *) {
+      min-width: calc(var(--spacing) * 0);
+    }
+  }
   .\*\:flex-1 {
     :is(& > *) {
       flex: 1;
@@ -1069,6 +1152,13 @@
   .\*\:cursor-pointer {
     :is(& > *) {
       cursor: pointer;
+    }
+  }
+  .\*\:truncate {
+    :is(& > *) {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
   .\*\:rounded-md {
@@ -1091,6 +1181,11 @@
       padding: calc(var(--spacing) * 0) !important;
     }
   }
+  .\*\:px-1 {
+    :is(& > *) {
+      padding-inline: calc(var(--spacing) * 1);
+    }
+  }
   .\*\:px-3 {
     :is(& > *) {
       padding-inline: calc(var(--spacing) * 3);
@@ -1099,6 +1194,16 @@
   .\*\:py-2 {
     :is(& > *) {
       padding-block: calc(var(--spacing) * 2);
+    }
+  }
+  .\*\:text-left {
+    :is(& > *) {
+      text-align: left;
+    }
+  }
+  .\*\:text-right {
+    :is(& > *) {
+      text-align: right;
     }
   }
   .\*\:text-sm {
@@ -1420,6 +1525,22 @@
       grid-row-start: 2;
     }
   }
+  .max-sm\:scrollbar-none {
+    @media (width < 40rem) {
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+  .max-sm\:scrollbar-none {
+    @media (width < 40rem) {
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
   .max-sm\:block {
     @media (width < 40rem) {
       display: block;
@@ -1522,6 +1643,16 @@
       :is(& > *) {
         margin: auto;
       }
+    }
+  }
+  .max-xs\:px-\[min\(1rem\,4\.2vw\)\] {
+    @media (width < 23.75rem) {
+      padding-inline: min(1rem, 4.2vw);
+    }
+  }
+  .max-xs\:px-\[min\(12px\,3vw\)\] {
+    @media (width < 23.75rem) {
+      padding-inline: min(12px, 3vw);
     }
   }
   .sm\:-mb-1\.5 {
@@ -2330,6 +2461,18 @@
     @media (prefers-color-scheme: dark) {
       color: var(--color-indigo-400);
     }
+  }
+}
+@layer base {
+  * {
+    scrollbar-color: initial;
+    scrollbar-width: initial;
+  }
+}
+@layer base {
+  * {
+    scrollbar-color: initial;
+    scrollbar-width: initial;
   }
 }
 @property --tw-rotate-x {

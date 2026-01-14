@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@midudev/tailwind-animations": "^0.2.0",
-    "@tailwindcss/cli": "^4.1.18"
+    "@tailwindcss/cli": "^4.1.18",
+    "tailwind-scrollbar": "^4.0.2"
   }
 }

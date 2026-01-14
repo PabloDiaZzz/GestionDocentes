@@ -437,6 +437,9 @@
                             <li>Mayor nota de oposición / mejor posición en lista</li>
                         </ol>
                     </div>
+                    <div class="rounded-xl bg-blue-400/30 dark:bg-indigo-900/50 border dark:border-indigo-900 p-5 text-indigo-600 dark:text-indigo-400 **:[p]:m-0" bis_skin_checked="1">
+                        <p>Puede editar la anotación del asunto para indicar razones de denegación/aprobación o cualquier otra observación a conveniencia.</p>
+                    </div>
                     <div class="flex flex-col gap-5" id="asuntos-body">
                     </div>
                     <div class="flex flex-col items-center justify-center gap-2.5 py-5 text-gray-600 dark:text-gray-400"
@@ -464,44 +467,44 @@
     </main>
     <template id="template-guardia">
         <div
-            class="size-full border-2 border-gray-400/50 dark:border-gray-700/50 rounded-xl flex flex-col gap-2 p-3 sm:p-6">
+            class="size-full border-2 border-gray-400/50 dark:border-gray-700/50 rounded-xl flex flex-col gap-2 p-3 sm:p-6 max-xs:px-[min(12px,3vw)]">
             <div
-                class="flex flex-col max-sm:xs:flex-row-reverse max-sm:xs:justify-between justify-normal gap-y-2 xs:gap-y-0 max-xs:items-center max-xs:w-full">
+                class="flex flex-col max-sm:sm:flex-row-reverse max-sm:sm:justify-between justify-normal gap-y-2 sm:gap-y-0 max-sm:items-center max-sm:w-full">
                 <div
-                    class="flex flex-col sm:flex-row gap-3 mb-3 items-end xs:items-center overflow-x-visible max-w-1/2 xs:max-w-full max-xs:grid max-xs:grid-cols-2 max-xs:grid-rows-2 max-xs:gap-y-1 max-xs:gap-x-auto max-xs:justify-between max-xs:items-center max-xs:max-w-full max-xs:*:m-auto">
+                    class="flex flex-col sm:flex-row gap-3 mb-3 items-end sm:items-center overflow-x-visible max-w-1/2 sm:max-w-full max-sm:grid max-sm:grid-cols-2 max-sm:grid-rows-2 max-sm:gap-y-1 max-sm:gap-x-auto max-sm:justify-between max-sm:items-center max-sm:max-w-full max-sm:*:m-auto">
                     <span
-                        class="hora-guardia bg-indigo-100 text-indigo-800 px-4 py-2 rounded-lg whitespace-nowrap max-xs:col-start-1 max-xs:row-start-1 w-fit"></span>
+                        class="hora-guardia bg-indigo-100 text-indigo-800 px-4 py-2 rounded-lg whitespace-nowrap max-sm:col-start-1 max-sm:row-start-1 w-fit max-xs:px-[min(1rem,4.2vw)]"></span>
                     <span
-                        class="span-realizada bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1 max-xs:col-start-2 max-xs:row-start-1"><svg
+                        class="span-realizada bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1 max-sm:col-start-2 max-sm:row-start-1"><svg
                             class="size-4 fill-green-800">
                             <use th:href="@{/assets/main.svg#check}"></use>
                         </svg>Realizada</span>
                     <span
-                        class="span-pendiente bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1 max-xs:col-start-2 max-xs:row-start-1"><svg
+                        class="span-pendiente bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm hidden items-center gap-1 max-sm:col-start-2 max-sm:row-start-1"><svg
                             class="size-4 fill-yellow-800">
                             <use th:href="@{/assets/main.svg#pend}"></use>
                         </svg>Pendiente</span>
                     <span
-                        class="fecha-guardia rounded-full p-1 bg-red-100 text-sm text-red-800 px-2.5 h-fit max-xs:col-start-1 max-xs:col-end-3 max-xs:row-start-2 max-sm:text-center"></span>
+                        class="fecha-guardia rounded-full p-1 bg-red-100 text-sm text-red-800 px-2.5 h-fit max-sm:col-start-1 max-sm:col-end-3 max-sm:row-start-2 max-sm:text-center whitespace-nowrap"></span>
                 </div>
                 <div
-                    class="flex *:flex-1/2 flex-row max-sm:xs:flex-col max-sm:xs:items-start items-center gap-0 h-fit xs:h-auto max-xs:items-start max-xs:justify-between">
-                    <div class="flex flex-col gap-0.5 xs:gap-0.5 xs:**:whitespace-nowrap **:w-fit">
+                    class="flex *:flex-1/2 flex-row max-sm:sm:flex-col max-sm:sm:items-start items-center gap-0 h-fit sm:h-auto max-sm:items-start max-sm:justify-between">
+                    <div class="flex flex-col gap-0.5 sm:gap-0.5 sm:**:whitespace-nowrap **:w-fit">
                         <p class="text-sm text-gray-600 dark:text-gray-400">Profesor Ausente:</p>
                         <p class="docente-ausente text-gray-900 dark:text-gray-100"></p>
                     </div>
-                    <div class="flex flex-col gap-0.5 xs:gap-2 xs:**:whitespace-nowrap **:w-fit">
+                    <div class="flex flex-col gap-0.5 sm:gap-2 sm:**:whitespace-nowrap **:w-fit">
                         <p class="text-sm text-gray-600 dark:text-gray-400">Profesor Cubriendo:</p>
                         <p class="docente-cubriendo text-gray-900 dark:text-gray-100"></p>
                     </div>
                 </div>
             </div>
             <div
-                class="size-full p-3 bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-gray-700 rounded-xl flex items-center gap-3 mt-3 text-blue-800 dark:text-violet-300">
+                class="size-full p-3 bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-gray-700 rounded-xl flex items-center gap-3 mt-3 text-blue-800 dark:text-violet-300 overflow-hidden">
                 <svg class="size-6 fill-blue-800 dark:fill-violet-300">
                     <use th:href="@{/assets/main.svg#paper}"></use>
                 </svg>
-                <p class="material-guardia">Sin material asignado</p>
+                <p class="material-guardia w-[85%] *:truncate *:min-w-0 *:w-full *:block">Sin material asignado</p>
             </div>
             <hr class="my-3 border-gray-400/50 dark:border-gray-700/50">
             <button
@@ -631,7 +634,7 @@
                     </svg>Rechazado</span>
             </div>
             <div
-                class="flex justify-beetween sm:flex-row flex-col gap-3 *:flex-1 w-full *:bg-gray-50 *:px-3 *:py-2 *:rounded-md *:text-sm *:text-gray-600 dark:*:text-gray-400 dark:*:bg-slate-900">
+                class="flex justify-beetween sm:flex-row flex-col gap-3 *:flex-1 w-full *:bg-gray-50 mx-1 *:py-2 *:rounded-md *:text-sm *:text-gray-600 dark:*:text-gray-400 dark:*:bg-slate-900">
                 <p>Tipo: <span class="rol-docente text-gray-900 dark:text-gray-100"></span></p>
                 <p>Antigüedad: <span class="antiguedad-docente text-black dark:text-gray-100"></span></p>
                 <p>Posición: <span class="posicion-docente text-black dark:text-gray-100"></span></p>

@@ -68,6 +68,13 @@ public class AsuntoPropioController {
 				.body(nuevo);
 	}
 
+	@PutMapping("/{id}")
+	public ResponseEntity<AsuntoPropio> actualizarAsuntoPropio(@PathVariable Long id, @Valid @RequestBody AsuntoPropio asunto) {
+		asuntoPropioService.findById(id);
+		asunto.setId(id);
+		return ResponseEntity.ok(asuntoPropioService.save(asunto));
+	}
+
 	@PutMapping("/validar/{fecha}/{docente_id}/{estado}")
 	public ResponseEntity<Boolean> actualizarAsuntoPropio(@PathVariable LocalDate fecha, @PathVariable Long docente_id, @PathVariable String estado) {
 		return ResponseEntity.ok(asuntoPropioService.validarAsunto(fecha, docente_id, estado));

@@ -768,6 +768,7 @@ async function alternarGuardia(guardia) {
             if (response.ok) {
                 mostrarAlerta('Guardia marcada como ' + (guardiaData.realizada ? 'realizada' : 'pendiente'));
                 pintarGuardia(guardia, guardiaData);
+                cargarAsuntos();
             } else {
                 mostrarAlerta('Error al alternar la guardia');
             }
