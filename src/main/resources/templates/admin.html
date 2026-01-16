@@ -27,7 +27,8 @@
             </a>
         </div>
     </header>
-    <main class="m-7 px-3 flex flex-col xl:flex-row gap-5 justify-center xl:max-w-full items-stretch overflow-x-hidden scrollbar-none">
+    <main
+        class="m-7 px-3 flex flex-col xl:flex-row gap-5 justify-center xl:max-w-full items-stretch overflow-x-hidden scrollbar-none">
         <div class="flex flex-col gap-5 xl:w-75">
             <nav class="p-5 rounded-xl bg-white dark:bg-slate-800 flex flex-col gap-2 shadow-md">
                 <label class="nav-option group">
@@ -63,6 +64,14 @@
                 </label>
 
                 <label class="nav-option group">
+                    <input type="radio" name="options" class="hidden" value="stats">
+                    <svg class="nav-icon">
+                        <use th:href="@{/assets/main.svg#stats}"></use>
+                    </svg>
+                    <span>Estadísticas</span>
+                </label>
+
+                <label class="nav-option group">
                     <input type="radio" name="options" class="hidden" value="config">
                     <svg class="nav-icon">
                         <use th:href="@{/assets/main.svg#settings}"></use>
@@ -82,7 +91,7 @@
 
         </div>
         <div class="seccion-tab block text-black dark:text-white max-w-[95vw] w-250">
-            <section class="section-unit flex flex-col gap-5" id="horario">
+            <section class="section-unit hidden flex-col gap-5" id="horario">
                 <article class="p-5 flex flex-col gap-5 size-full bg-white dark:bg-slate-800 rounded-xl shadow-md">
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-2.5">
@@ -101,7 +110,8 @@
                     </div>
                     <div
                         class="rounded-xl bg-blue-400/30 dark:bg-indigo-900/50 border dark:border-indigo-900 p-5 text-indigo-600 dark:text-indigo-400 **:[p]:m-0">
-                        <p>Haga clic en cualquier celda para editar el horario. Los cambios se guardarán automáticamente.</p>
+                        <p>Haga clic en cualquier celda para editar el horario. Los cambios se guardarán
+                            automáticamente.</p>
                         <br class="hidden max-sm:block">
                         <p class="hidden max-sm:block">Utilice la primera fila para desplazarse sin problemas.</p>
                     </div>
@@ -127,7 +137,8 @@
                             <span>Turno Mañana</span>
                         </button>
                     </div>
-                    <div class="max-sm:overflow-x-auto max-sm:snap-x max-sm:snap-mandatory max-sm:scroll-pl-30 max-sm:scrollbar-none border border-gray-400 dark:border-slate-700 @container">
+                    <div
+                        class="max-sm:overflow-x-auto max-sm:snap-x max-sm:snap-mandatory max-sm:scroll-pl-30 max-sm:scrollbar-none border border-gray-400 dark:border-slate-700 @container">
                         <table id="horario-tabla-mañana"
                             class="w-full text-left **:border **:border-gray-400 dark:**:border-slate-700 **:p-3 **:first:[td]:w-30 **:first:[td]:bg-black/5 dark:**:first:[td]:bg-slate-700 **:[th]:bg-black/5 dark:**:[th]:bg-slate-700 **:first:[td]:text-center **:[tr]:h-16 **:not-first:[td]:w-40 **:first:[td,th]:max-sm:sticky **:first:[td,th]:max-sm:left-0 **:first:[td,th]:max-sm:z-20 **:first:[td,th]:max-sm:w-30 **:first:[td,th]:max-sm:min-w-30 **:not-first:[td,th]:max-sm:snap-start **:not-first:[td,th]:max-sm:min-w-[calc(100cqw-7.5rem)] **:not-first:[td,th]:max-sm:w-[calc(100cqw-7.5rem)] **:first:[td,th]:max-sm:border-l-0! **:[tr,tbody,thead]:border-l-0! border-l-0!">
                             <thead>
@@ -437,8 +448,10 @@
                             <li>Mayor nota de oposición / mejor posición en lista</li>
                         </ol>
                     </div>
-                    <div class="rounded-xl bg-blue-400/30 dark:bg-indigo-900/50 border dark:border-indigo-900 p-5 text-indigo-600 dark:text-indigo-400 **:[p]:m-0" bis_skin_checked="1">
-                        <p>Puede editar la anotación del asunto para indicar razones de denegación/aprobación o cualquier otra observación a conveniencia.</p>
+                    <div class="rounded-xl bg-blue-400/30 dark:bg-indigo-900/50 border dark:border-indigo-900 p-5 text-indigo-600 dark:text-indigo-400 **:[p]:m-0"
+                        bis_skin_checked="1">
+                        <p>Puede editar la anotación del asunto para indicar razones de denegación/aprobación o
+                            cualquier otra observación a conveniencia.</p>
                     </div>
                     <div class="flex flex-col gap-5" id="asuntos-body">
                     </div>
@@ -448,6 +461,37 @@
                             <use th:href="@{/assets/main.svg#paper}"></use>
                         </svg>
                         <p>No hay asuntos propios registrados</p>
+                    </div>
+                </article>
+            </section>
+            <section class="section-unit flex flex-col gap-5" id="stats">
+                <article class="p-5 flex flex-col gap-5 size-full bg-white dark:bg-slate-800 rounded-xl shadow-md">
+                    <div class="flex justify-between items-center py-3">
+                        <div class="flex items-center gap-2.5">
+                            <svg class="size-6 text-indigo-600 dark:text-indigo-400">
+                                <use th:href="@{/assets/main.svg#stats}"></use>
+                            </svg>
+                            <p>Estadísticas</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-5" id="stats-body">
+                        <div id="guardias-realizadas">
+                            <div
+                                class="max-sm:overflow-x-auto max-sm:snap-x max-sm:snap-mandatory max-sm:scroll-pl-30 max-sm:scrollbar-none border border-gray-400 dark:border-slate-700 @container">
+                                <table
+                                    class="w-full text-left **:border **:border-gray-400 dark:**:border-slate-700 **:p-3 **:first:[td]:w-90 **:last:[td]:bg-black/5 dark:**:last:[td]:bg-slate-700 **:[td]:bg-slate-800 dark:**:[th]:bg-slate-700 **:not-first:[td]:w-30 **:first:[td,th]:max-sm:sticky **:first:[td,th]:max-sm:left-0 **:first:[td,th]:max-sm:z-20 **:not-first:[td,th]:max-sm:z-1 **:first:[td,th]:max-sm:w-90 **:first:[td,th]:max-sm:min-w-90 **:not-first:[td,th]:max-sm:snap-end **:not-first:[td,th]:max-sm:min-w-[calc(100cqw-22.5rem)] **:not-first:[td,th]:max-sm:w-[calc(100cqw-22.5rem)] **:first:[td,th]:max-sm:border-l-0! **:[tr,tbody,thead]:border-l-0! border-l-0!"
+                                    id="guardias-realizadas-table">
+                                    <thead class="text-left">
+                                        <th>Docente</th>
+                                        <th>Siglas</th>
+                                        <th>Departamento</th>
+                                        <th>Guardias</th>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </article>
             </section>

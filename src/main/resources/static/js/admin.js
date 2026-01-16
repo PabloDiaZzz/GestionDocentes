@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarAusencias();
     setupGuardias();
     cargarAsuntos();
+    cargarStats();
 })
 
 radios.forEach(radio => {
@@ -1030,4 +1031,24 @@ function anotacionAsunto(asuntoDiv) {
     }
 
     asuntoDiv.querySelector('.btn-notas').addEventListener('click', funcEditar, { once: true });
+}
+
+async function cargarStats() {
+    const tableBody = document.getElementById('guardias-realizadas-table').querySelector('tbody');
+    tableBody.innerHTML = '';
+    const guardias = new Map(await fetch(`/api/guardias/realizadas`).then(res => res.json()).then(data => Object.entries(data)));
+    const docentes = await fetch(`/api/docentes`).then(res => res.json().then(data => {
+        console.log(data);
+        const rows = data.map(row => {
+        const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${row.nombre} ${row.apellidos}</td>
+                <td>${row.siglas}</td>
+                <td>${row.departamento.codigo}</td>
+                <td>${guardias.get(row.siglas)}</td>
+            `;
+            return tr;
+        })
+        rows.forEach(row => tableBody.appendChild(row));
+    }));
 }

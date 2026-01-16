@@ -60,4 +60,5 @@
     <symbol id="mail" viewBox="0 0 16 16">
         <path fill-rule="evenodd" clip-rule="evenodd" d="m1 3.5.5-.5h13l.5.5v9l-.5.5h-13l-.5-.5zm1 1.035V12h12V4.536L8.31 8.9H7.7zM13.03 4H2.97L8 7.869z"/>
     </symbol>
+    <symbol id="stats" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="a"><path d="M0 0h96v96H0z"/></clipPath></defs><g clip-path="url(#a)"><g transform="translate(-232)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="4"><rect data-name="Rectangle 12" width="88" height="88" rx="8" transform="translate(236 4)" stroke-miterlimit="10"/><g data-name="Group 157" stroke-linejoin="round"><g data-name="Group 156"><path data-name="Line 22" d="M272 42v34"/><path data-name="Line 23" d="M305 34v42"/><path data-name="Line 24" d="M288 47v29"/><path data-name="Line 25" d="M255 53v23"/></g><path data-name="Path 189" d="m255 42 17-14 16 6 17-15"/></g></g></g></symbol>
 </svg>

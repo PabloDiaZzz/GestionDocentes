@@ -90,9 +90,7 @@ public class GuardiaController {
 				String contentType = null;
 				try {
 					contentType = Files.probeContentType(rutaArchivo);
-				} catch (IOException ex) {
-					// Si falla, asumimos binario genérico
-				}
+				} catch (IOException ignored) {}
 				if (contentType == null) {
 					contentType = "application/octet-stream";
 				}
@@ -108,6 +106,11 @@ public class GuardiaController {
 		} catch (MalformedURLException e) {
 			return ResponseEntity.badRequest().build();
 		}
+	}
+
+	@GetMapping("/realizadas")
+	public Map<String, Integer> getGuardiasRealizadas() {
+		return guardiaService.getRealizadas();
 	}
 
 	@GetMapping("/realizadas/{docenteId}")

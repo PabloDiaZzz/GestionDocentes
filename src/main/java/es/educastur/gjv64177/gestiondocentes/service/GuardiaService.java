@@ -330,4 +330,13 @@ public class GuardiaService {
 		List<Guardia> guardiasGeneradas = generarGuardiasPorAusencia(asunto.getDocente(), asunto.getDiaSolicitado());
 		guardiaRepository.saveAll(guardiasGeneradas);
 	}
+
+    public Map<String, Integer> getRealizadas() {
+		List<Docente> docentes = docenteRepository.findAll();
+		Map<String, Integer> realizadas = new HashMap<>();
+        for (Docente docente : docentes) {
+			realizadas.put(docente.getSiglas(), findByDocenteIdAndRealizada(docente.getId(), true).size());
+        }
+        return realizadas;
+    }
 }
